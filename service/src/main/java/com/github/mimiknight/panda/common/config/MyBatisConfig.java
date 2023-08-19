@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * @author MiMiKnight victor2015yhm@gmail.com
  * @since 2023-08-18 22:39:13
  */
-@MapperScan("com.github.mimiknight.panda.mapper")
+@MapperScan(basePackages = {"com.github.mimiknight.panda.mapper"})
 @Configuration
 public class MyBatisConfig {
 

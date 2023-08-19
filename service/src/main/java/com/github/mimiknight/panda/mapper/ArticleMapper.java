@@ -1,6 +1,5 @@
 package com.github.mimiknight.panda.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.time.ZonedDateTime;

@@ -16,12 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class SaveArticleHandler implements EcologyRequestHandler<SaveArticleRequest, SaveArticleResponse> {
 
-    private ArticleService articleService;
-
     @Autowired
-    public void setArticleService(ArticleService articleService) {
-        this.articleService = articleService;
-    }
+    private ArticleService articleService;
 
     @Override
     public void handle(SaveArticleRequest request, SaveArticleResponse response) throws Exception {

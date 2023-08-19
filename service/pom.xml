@@ -87,6 +87,10 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-json</artifactId>
         </dependency>
         <dependency>
@@ -106,7 +110,6 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -136,10 +139,6 @@
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-        </dependency>
 
     </dependencies>
 
@@ -158,7 +157,7 @@
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
                 <includes>
-                    <include>mapper/*Mapper.xml</include>
+                    <include>mapper/**/*Mapper.xml</include>
                     <include>config/*.properties</include>
                     <include>SSL/SSL.keystore</include>
                     <include>logback-spring.xml</include>

@@ -2,8 +2,11 @@
 
 ## Environment
 - IntelliJIDEA ideaIU-2022.3.3.win
+- MySQL v8.0.34
+- Redis v3.0.504
 - spring-boot v2.7.12
 - mybatis-spring-boot-starter v2.3.1
+- mysql-connector-java v8.0.33
 ## VM Option
 > - -server
 > - -Duser.language=en

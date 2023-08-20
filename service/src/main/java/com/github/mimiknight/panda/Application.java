@@ -1,8 +1,10 @@
 package com.github.mimiknight.panda;
 
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * 启动类
@@ -12,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 @Slf4j
+@EnableTransactionManagement
 @SpringBootApplication(scanBasePackages = {"com.github.mimiknight.panda"})
 public class Application {
     public static void main(String[] args) {

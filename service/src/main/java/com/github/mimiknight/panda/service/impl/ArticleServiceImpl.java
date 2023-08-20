@@ -4,6 +4,7 @@ import com.github.mimiknight.panda.mapper.ArticleMapper;
 import com.github.mimiknight.panda.service.standard.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -20,6 +21,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleMapper articleMapper;
 
+    @Transactional
     @Override
     public void save(String title, String article) {
         String id = UUID.randomUUID().toString().replace("-", "");

@@ -1,5 +1,9 @@
 # 项目名：kuca-panda-service
 
+## Environment
+- IntelliJIDEA ideaIU-2022.3.3.win
+- spring-boot v2.7.12
+- mybatis-spring-boot-starter v2.3.1
 ## VM Option
 > - -server
 > - -Duser.language=en

@@ -1,6 +1,8 @@
 package com.github.mimiknight.panda.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.time.ZonedDateTime;
 
@@ -13,6 +15,8 @@ import java.time.ZonedDateTime;
  * @author victor2015yhm@gmail.com
  * @since 2023-05-22 07:33:51
  */
+@Mapper
+@Repository
 public interface ArticleMapper {
 
     /**

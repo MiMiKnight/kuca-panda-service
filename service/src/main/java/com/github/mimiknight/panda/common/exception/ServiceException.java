@@ -5,6 +5,10 @@ import org.springframework.http.HttpStatus;
 
 /**
  * 自定义业务异常
+ * <p>
+ * 状态码 400：请求参数校验未通过异常
+ * <p>
+ * 状态码 500：服务异常
  *
  * @author victor2015yhm@gmail.com
  * @since 2023-03-10 19:04:16

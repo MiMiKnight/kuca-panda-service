@@ -1,6 +1,6 @@
 package com.github.mimiknight.panda.rest.handler.article;
 
-import com.github.mimiknight.kuca.ecology.core.EcologyRequestHandler;
+import com.github.mimiknight.kuca.ecology.handler.EcologyRequestHandler;
 import com.github.mimiknight.panda.model.request.SaveArticleRequest;
 import com.github.mimiknight.panda.model.response.SaveArticleResponse;
 import com.github.mimiknight.panda.service.standard.ArticleService;

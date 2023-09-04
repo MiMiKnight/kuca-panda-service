@@ -1,6 +1,6 @@
 package com.github.mimiknight.panda.rest.controller;
 
-import com.github.mimiknight.kuca.ecology.core.EcologyHandleAdapter;
+import com.github.mimiknight.kuca.ecology.core.EcologyHandleController;
 import com.github.mimiknight.kuca.ecology.model.response.SuccessResponse;
 import com.github.mimiknight.panda.common.constant.ApiPath;
 import com.github.mimiknight.panda.model.request.SaveArticleRequest;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RestController
 @RequestMapping(path = ApiPath.Module.ARTICLE, produces = {MediaType.APPLICATION_JSON_VALUE})
-public class ArticleController extends EcologyHandleAdapter {
+public class ArticleController extends EcologyHandleController {
 
     @Operation(summary = "保存article接口")
     @PostMapping(value = "/user/v1/save")

@@ -1,6 +1,6 @@
 package com.github.mimiknight.panda.rest.handler.health;
 
-import com.github.mimiknight.kuca.ecology.core.EcologyRequestHandler;
+import com.github.mimiknight.kuca.ecology.handler.EcologyRequestHandler;
 import com.github.mimiknight.panda.model.request.HealthCheckRequest;
 import com.github.mimiknight.panda.model.response.HealthCheckResponse;
 import lombok.extern.slf4j.Slf4j;

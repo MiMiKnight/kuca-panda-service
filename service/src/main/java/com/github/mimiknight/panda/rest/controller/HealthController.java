@@ -1,6 +1,6 @@
 package com.github.mimiknight.panda.rest.controller;
 
-import com.github.mimiknight.kuca.ecology.core.EcologyHandleAdapter;
+import com.github.mimiknight.kuca.ecology.core.EcologyHandleController;
 import com.github.mimiknight.kuca.ecology.model.response.SuccessResponse;
 import com.github.mimiknight.panda.common.constant.ApiPath;
 import com.github.mimiknight.panda.model.request.HealthCheckRequest;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RestController
 @RequestMapping(path = ApiPath.Module.HEALTH, produces = {MediaType.APPLICATION_JSON_VALUE})
-public class HealthController extends EcologyHandleAdapter {
+public class HealthController extends EcologyHandleController {
 
     @Operation(summary = "健康检查接口")
     @GetMapping(path = "/servlet/v1/check")

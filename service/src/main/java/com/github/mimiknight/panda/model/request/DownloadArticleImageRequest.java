@@ -1,8 +1,11 @@
 package com.github.mimiknight.panda.model.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.mimiknight.kuca.ecology.model.request.EcologyRequest;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 /**
  * 文章图片下载接口请求参数
@@ -13,5 +16,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DownloadArticleImageRequest implements EcologyRequest {
+
+    @JsonProperty(value = "image_ids")
+    private List<String> imageIds;
 
 }

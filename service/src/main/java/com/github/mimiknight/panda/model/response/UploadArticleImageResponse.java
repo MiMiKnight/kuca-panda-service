@@ -14,4 +14,6 @@ import lombok.Setter;
 @Setter
 public class UploadArticleImageResponse implements EcologyResponse {
 
+    private String tip = "success";
+
 }

@@ -27,7 +27,7 @@ public class HealthController extends EcologyHandleController implements ApiStan
 
     @Operation(summary = "健康检查接口")
     @ResponseBody
-    @GetMapping(path = "/servlet/v1/check", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/servlet/v1/check", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<HealthCheckResponse> check() throws Exception {
         return handle(new HealthCheckRequest());

@@ -56,7 +56,7 @@ public interface Constant {
         /**
          * 项目全路径URL匹配规则
          */
-        String FLL_API_PATH_MATCH_PATTERN = "/rest/developer/panda-service/*";
+        String FULL_API_PATH_MATCH_PATTERN = "/rest/developer/panda-service/*";
     }
 
     /**

@@ -23,8 +23,8 @@ public class FilterRegistryConfig {
      *
      * @return {@link List}<{@link String}>
      */
-    private List<String> allApiPathMatchPattern() {
-        return Collections.singletonList(Constant.Filter.FLL_API_PATH_MATCH_PATTERN);
+    private List<String> fullApiPathMatchPattern() {
+        return Collections.singletonList(Constant.Filter.FULL_API_PATH_MATCH_PATTERN);
     }
 
     @Bean
@@ -37,7 +37,7 @@ public class FilterRegistryConfig {
         // 过滤器顺序
         registrationBean.setOrder(500);
         // 拦截规则
-        registrationBean.setUrlPatterns(allApiPathMatchPattern());
+        registrationBean.setUrlPatterns(fullApiPathMatchPattern());
         return registrationBean;
     }
 

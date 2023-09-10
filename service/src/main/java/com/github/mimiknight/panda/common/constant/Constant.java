@@ -39,13 +39,24 @@ public interface Constant {
     /**
      * 日志相关常量
      */
-    interface Log {
+    interface Logger {
 
         /**
          * MDC跟踪Key
          */
         String MDC_TRACE_ID_KEY = "TRACE_ID";
 
+    }
+
+    /**
+     * 过滤器常量
+     */
+    interface Filter {
+
+        /**
+         * 项目全路径URL匹配规则
+         */
+        String FLL_API_PATH_MATCH_PATTERN = "/rest/developer/panda-service/*";
     }
 
     /**

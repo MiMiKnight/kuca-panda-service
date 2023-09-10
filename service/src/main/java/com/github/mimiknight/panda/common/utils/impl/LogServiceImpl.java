@@ -28,7 +28,7 @@ public class LogServiceImpl implements LogService {
     public void logTrace(Runnable trackedCode) {
         String uuid = UUID.randomUUID().toString().replace("-", "");
         // 设置当前请求线程中的跟踪ID
-        MDC.put(Constant.Log.MDC_TRACE_ID_KEY, uuid);
+        MDC.put(Constant.Logger.MDC_TRACE_ID_KEY, uuid);
         // 执行被跟踪的代码逻辑
         trackedCode.run();
         // 清除当前请求线程中的跟踪ID
@@ -45,7 +45,7 @@ public class LogServiceImpl implements LogService {
     public <T> T logTrace(Supplier<T> trackedCode) {
         String uuid = UUID.randomUUID().toString().replace("-", "");
         // 设置当前请求线程中的跟踪ID
-        MDC.put(Constant.Log.MDC_TRACE_ID_KEY, uuid);
+        MDC.put(Constant.Logger.MDC_TRACE_ID_KEY, uuid);
         // 执行被跟踪的代码逻辑
         T result = trackedCode.get();
         // 清除当前请求线程中的跟踪ID

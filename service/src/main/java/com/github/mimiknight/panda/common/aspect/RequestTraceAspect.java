@@ -45,7 +45,7 @@ public class RequestTraceAspect implements Ordered {
     public Object doAround(ProceedingJoinPoint point) throws Throwable {
         String uuid = UUID.randomUUID().toString().replace("-", "");
         // 设置当前请求线程中的跟踪ID
-        MDC.put(Constant.Log.MDC_TRACE_ID_KEY, uuid);
+        MDC.put(Constant.Logger.MDC_TRACE_ID_KEY, uuid);
         // 执行被切业务逻辑
         Object proceed = point.proceed();
         // 清除当前请求线程中的跟踪ID

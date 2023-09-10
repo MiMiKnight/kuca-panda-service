@@ -42,7 +42,9 @@
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--kuca-ecology-->
-        <kuca-ecology-spring-boot-starter.version>0.0.1-SNAPSHOT-jdk8</kuca-ecology-spring-boot-starter.version>
+        <kuca-ecology.version>0.0.1-SNAPSHOT-jdk8</kuca-ecology.version>
+        <!--kuca-utils-->
+        <kuca-utils.version>0.0.1-SNAPSHOT-jdk8</kuca-utils.version>
     </properties>
 
     <dependencyManagement>
@@ -50,7 +52,12 @@
             <dependency>
                 <groupId>com.github.mimiknight.kuca</groupId>
                 <artifactId>kuca-ecology-spring-boot-starter</artifactId>
-                <version>${kuca-ecology-spring-boot-starter.version}</version>
+                <version>${kuca-ecology.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.mimiknight.kuca</groupId>
+                <artifactId>kuca-utils-spring-boot-starter</artifactId>
+                <version>${kuca-utils.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

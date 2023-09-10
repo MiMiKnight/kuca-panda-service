@@ -13,5 +13,6 @@ public class UploadArticleImageHandler implements EcologyRequestHandler<UploadAr
     @Override
     public void handle(UploadArticleImageRequest request, UploadArticleImageResponse response) throws Exception {
         log.info("upload-article-image");
+        response.setTip("success-2");
     }
 }

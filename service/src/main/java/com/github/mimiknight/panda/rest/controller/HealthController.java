@@ -1,12 +1,13 @@
 package com.github.mimiknight.panda.rest.controller;
 
 import com.github.mimiknight.kuca.ecology.core.EcologyHandleController;
-import com.github.mimiknight.kuca.ecology.model.response.SuccessResponse;
 import com.github.mimiknight.panda.common.constant.ApiPath;
 import com.github.mimiknight.panda.model.request.HealthCheckRequest;
+import com.github.mimiknight.panda.model.response.HealthCheckResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ public class HealthController extends EcologyHandleController {
 
     @Operation(summary = "健康检查接口")
     @GetMapping(path = "/servlet/v1/check")
-    public SuccessResponse v1() throws Exception {
+    public ResponseEntity<HealthCheckResponse> v1() throws Exception {
         return handle(new HealthCheckRequest());
     }
 }

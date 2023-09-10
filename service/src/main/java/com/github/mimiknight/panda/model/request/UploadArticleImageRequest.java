@@ -3,6 +3,9 @@ package com.github.mimiknight.panda.model.request;
 import com.github.mimiknight.kuca.ecology.model.request.EcologyRequest;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 上传文章图片接口请求参数
@@ -13,5 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UploadArticleImageRequest implements EcologyRequest {
+
+    private List<MultipartFile> files;
 
 }

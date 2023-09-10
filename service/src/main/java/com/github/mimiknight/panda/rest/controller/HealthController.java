@@ -1,7 +1,6 @@
 package com.github.mimiknight.panda.rest.controller;
 
 import com.github.mimiknight.kuca.ecology.core.EcologyHandleController;
-import com.github.mimiknight.kuca.ecology.model.response.SuccessResponse;
 import com.github.mimiknight.panda.common.constant.ApiPath;
 import com.github.mimiknight.panda.model.request.HealthCheckRequest;
 import com.github.mimiknight.panda.model.response.HealthCheckResponse;
@@ -30,7 +29,7 @@ public class HealthController extends EcologyHandleController implements ApiStan
     @ResponseBody
     @GetMapping(path = "/servlet/v1/check", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
-    public ResponseEntity<SuccessResponse> check() throws Exception {
+    public ResponseEntity<HealthCheckResponse> check() throws Exception {
         return handle(new HealthCheckRequest());
     }
 

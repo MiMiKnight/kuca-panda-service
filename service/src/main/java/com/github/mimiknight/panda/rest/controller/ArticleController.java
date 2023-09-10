@@ -1,13 +1,14 @@
 package com.github.mimiknight.panda.rest.controller;
 
 import com.github.mimiknight.kuca.ecology.core.EcologyHandleController;
-import com.github.mimiknight.kuca.ecology.model.response.SuccessResponse;
 import com.github.mimiknight.panda.common.constant.ApiPath;
 import com.github.mimiknight.panda.model.request.DownloadArticleImageRequest;
 import com.github.mimiknight.panda.model.request.QueryArticleRequest;
 import com.github.mimiknight.panda.model.request.SaveArticleRequest;
 import com.github.mimiknight.panda.model.request.UploadArticleImageRequest;
 import com.github.mimiknight.panda.model.response.QueryArticleResponse;
+import com.github.mimiknight.panda.model.response.SaveArticleResponse;
+import com.github.mimiknight.panda.model.response.UploadArticleImageResponse;
 import com.github.mimiknight.panda.rest.standard.ApiStandard;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,7 +42,7 @@ public class ArticleController extends EcologyHandleController implements ApiSta
     @ResponseBody
     @PostMapping(value = "/user/v1/publish-article", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
-    public ResponseEntity<SuccessResponse> publishArticle(@RequestBody SaveArticleRequest request) throws Exception {
+    public ResponseEntity<SaveArticleResponse> publishArticle(@RequestBody SaveArticleRequest request) throws Exception {
         return handle(request);
     }
 
@@ -57,7 +58,7 @@ public class ArticleController extends EcologyHandleController implements ApiSta
     @ResponseBody
     @PostMapping(value = "/user/v1/upload-article-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
-    public ResponseEntity<SuccessResponse> batchUploadArticleImage(@RequestPart("images") List<MultipartFile> files) throws Exception {
+    public ResponseEntity<UploadArticleImageResponse> batchUploadArticleImage(@RequestPart("images") List<MultipartFile> files) throws Exception {
         UploadArticleImageRequest request = new UploadArticleImageRequest();
         request.setFiles(files);
         return handle(request);

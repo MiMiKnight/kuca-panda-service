@@ -5,7 +5,6 @@ import com.github.mimiknight.panda.model.response.ArticleVO;
 import com.github.mimiknight.panda.model.response.QueryArticleResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
@@ -18,13 +17,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface CommonMapStruct {
 
-//    CommonMapStruct INSTANCE = Mappers.getMapper(CommonMapStruct.class);
-
     /**
      * ArticleEntity转Article
      *
      * @param entities 文章实体类集合
-     * @return {@link QueryArticleResponse}
+     * @return {@link List}<{@link ArticleVO}>
      */
 
     @Mapping(source = "id", target = "id")

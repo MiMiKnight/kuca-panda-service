@@ -1,13 +1,13 @@
 package com.github.mimiknight.panda.common.aspect;
 
-import com.github.mimiknight.kuca.ecology.model.response.ExceptionResponse;
+import com.github.mimiknight.panda.model.response.ExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * 全局异常处理切面
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  */
 @Slf4j
 @Component
-@ControllerAdvice
-public class GlobalExceptionAspect {
+@RestControllerAdvice
+public class HandleGlobalExceptionAspect {
 
     /**
      * 默认异常处理
@@ -31,14 +31,11 @@ public class GlobalExceptionAspect {
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<ExceptionResponse> handle(Exception e) {
         ExceptionResponse body = ExceptionResponse.builder()
-                .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .errorCode("101.F0000")
                 .errorType("System Exception")
-                .data("Default Exception")
-                .build();
+                .data("Default Exception").build();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(body);
+                .contentType(MediaType.APPLICATION_JSON).body(body);
 
     }
 

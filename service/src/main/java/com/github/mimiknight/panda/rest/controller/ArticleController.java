@@ -59,8 +59,7 @@ public class ArticleController extends EcologyHandleController implements ApiSta
     @PostMapping(value = "/user/v1/upload-article-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<UploadArticleImageResponse> batchUploadArticleImage(@RequestPart("images") List<MultipartFile> files) throws Exception {
-        UploadArticleImageRequest request = new UploadArticleImageRequest();
-        request.setFiles(files);
+        UploadArticleImageRequest request = UploadArticleImageRequest.builder().files(files).build();
         return handle(request);
     }
 

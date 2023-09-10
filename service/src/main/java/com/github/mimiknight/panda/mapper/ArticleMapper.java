@@ -1,10 +1,12 @@
 package com.github.mimiknight.panda.mapper;
 
+import com.github.mimiknight.panda.model.entity.ArticleEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 /**
  * 文章表持久化类
@@ -33,4 +35,12 @@ public interface ArticleMapper {
               @Param("article") String article,
               @Param("createdTime") ZonedDateTime createdTime,
               @Param("updatedTime") ZonedDateTime updatedTime);
+
+    /**
+     * 根据文章主键查询文章
+     *
+     * @param articleIds 文章主键集合
+     * @return {@link List}<{@link ArticleEntity}>
+     */
+    List<ArticleEntity> queryArticleById(@Param("articleIds") List<String> articleIds);
 }

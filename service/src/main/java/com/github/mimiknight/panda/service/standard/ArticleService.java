@@ -1,5 +1,9 @@
 package com.github.mimiknight.panda.service.standard;
 
+import com.github.mimiknight.panda.model.entity.ArticleEntity;
+
+import java.util.List;
+
 /**
  * 文章表服务接口
  *
@@ -16,4 +20,12 @@ public interface ArticleService {
      */
 
     void save(String title, String article);
+
+    /**
+     * 根据文章主键查询文章
+     *
+     * @param articleIds 文章主键集合
+     * @return {@link List}<{@link ArticleEntity}>
+     */
+    List<ArticleEntity> queryArticleById(List<String> articleIds);
 }

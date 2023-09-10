@@ -4,10 +4,10 @@ import com.github.mimiknight.kuca.ecology.core.EcologyHandleController;
 import com.github.mimiknight.kuca.ecology.model.response.SuccessResponse;
 import com.github.mimiknight.panda.common.constant.ApiPath;
 import com.github.mimiknight.panda.model.request.DownloadArticleImageRequest;
+import com.github.mimiknight.panda.model.request.QueryArticleRequest;
 import com.github.mimiknight.panda.model.request.SaveArticleRequest;
 import com.github.mimiknight.panda.model.request.UploadArticleImageRequest;
-import com.github.mimiknight.panda.model.response.SaveArticleResponse;
-import com.github.mimiknight.panda.model.response.UploadArticleImageResponse;
+import com.github.mimiknight.panda.model.response.QueryArticleResponse;
 import com.github.mimiknight.panda.rest.standard.ApiStandard;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,6 +42,14 @@ public class ArticleController extends EcologyHandleController implements ApiSta
     @PostMapping(value = "/user/v1/publish-article", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public ResponseEntity<SuccessResponse> publishArticle(@RequestBody SaveArticleRequest request) throws Exception {
+        return handle(request);
+    }
+
+    @Operation(summary = "查询文章接口")
+    @ResponseBody
+    @PostMapping(value = "/user/v1/query-article", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Override
+    public ResponseEntity<QueryArticleResponse> queryArticleById(@RequestBody QueryArticleRequest request) throws Exception {
         return handle(request);
     }
 

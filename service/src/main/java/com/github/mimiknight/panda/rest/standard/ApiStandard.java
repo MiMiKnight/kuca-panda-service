@@ -2,7 +2,9 @@ package com.github.mimiknight.panda.rest.standard;
 
 import com.github.mimiknight.kuca.ecology.model.response.SuccessResponse;
 import com.github.mimiknight.panda.model.request.DownloadArticleImageRequest;
+import com.github.mimiknight.panda.model.request.QueryArticleRequest;
 import com.github.mimiknight.panda.model.request.SaveArticleRequest;
+import com.github.mimiknight.panda.model.response.QueryArticleResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
@@ -25,6 +27,8 @@ public class ApiStandard {
     public interface Article {
 
         ResponseEntity<SuccessResponse> publishArticle(SaveArticleRequest request) throws Exception;
+
+        ResponseEntity<QueryArticleResponse> queryArticleById(QueryArticleRequest request) throws Exception;
 
         ResponseEntity<SuccessResponse> batchUploadArticleImage(List<MultipartFile> files) throws Exception;
 

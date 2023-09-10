@@ -14,13 +14,24 @@
     </resultMap>
 
     <!-- 通用查询结果列 -->
-    <sql id="BaseColumnList">
-        id, title, article, audit, deleted, created_time, updated_time
+    <sql id="BaseColumns">
+        id
+        , title, article, audit, deleted, created_time, updated_time
     </sql>
 
     <insert id="save">
         INSERT INTO t_panda_article (id, title, article, created_time, updated_time)
             VALUE (#{id}, #{title}, #{article}, #{createdTime}, #{updatedTime});
     </insert>
+
+    <select id="queryArticleById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseColumns"/>
+        FROM t_panda_article
+        WHERE id IN
+        <foreach collection="articleIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 
 </mapper>

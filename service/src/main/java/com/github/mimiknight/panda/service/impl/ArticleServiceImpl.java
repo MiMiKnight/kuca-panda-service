@@ -1,12 +1,16 @@
 package com.github.mimiknight.panda.service.impl;
 
 import com.github.mimiknight.panda.mapper.ArticleMapper;
+import com.github.mimiknight.panda.model.entity.ArticleEntity;
 import com.github.mimiknight.panda.service.standard.ArticleService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZonedDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -27,6 +31,14 @@ public class ArticleServiceImpl implements ArticleService {
         String id = UUID.randomUUID().toString().replace("-", "");
         ZonedDateTime now = ZonedDateTime.now();
         articleMapper.save(id, title, article, now, now);
+    }
+
+    @Override
+    public List<ArticleEntity> queryArticleById(List<String> articleIds) {
+        if (CollectionUtils.isEmpty(articleIds)) {
+            return Collections.emptyList();
+        }
+        return articleMapper.queryArticleById(articleIds);
     }
 
 }

@@ -24,7 +24,7 @@ public interface AspectRule {
         /**
          * 切面规则
          */
-        String RULE_PATTERN = "";
+        String RULE_PATTERN = "@annotation(org.springframework.web.bind.annotation.GetMapping) || @annotation(org.springframework.web.bind.annotation.PostMapping) || @annotation(org.springframework.web.bind.annotation.PutMapping) || @annotation(org.springframework.web.bind.annotation.DeleteMapping) || @annotation(org.springframework.web.bind.annotation.PatchMapping)";
 
         /**
          * 切面顺序

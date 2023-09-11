@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 /**
  * 全局异常处理切面
@@ -181,6 +182,24 @@ public class HandleGlobalExceptionAspect {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
     public ExceptionResponse handle(MethodArgumentTypeMismatchException e) {
+        return ExceptionResponse.builder()
+                .errorCode("101.F0002")
+                .errorType("System Exception")
+                .data("Default Exception").build();
+    }
+
+
+    /**
+     * 未找到处理程序异常
+     * <p>
+     * 404
+     *
+     * @param e {@link NoHandlerFoundException}
+     * @return {@link ExceptionResponse}
+     */
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ExceptionHandler(value = NoHandlerFoundException.class)
+    public ExceptionResponse handle(NoHandlerFoundException e) {
         return ExceptionResponse.builder()
                 .errorCode("101.F0002")
                 .errorType("System Exception")

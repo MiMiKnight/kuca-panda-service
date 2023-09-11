@@ -8,7 +8,6 @@ import com.github.mimiknight.panda.rest.standard.ApiStandard;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +28,7 @@ public class HealthController extends EcologyHandleController implements ApiStan
     @ResponseBody
     @GetMapping(path = "/servlet/v1/check", produces = MediaType.APPLICATION_JSON_VALUE)
     @Override
-    public ResponseEntity<HealthCheckResponse> check() throws Exception {
+    public HealthCheckResponse check() throws Exception {
         return handle(new HealthCheckRequest());
     }
 

@@ -7,7 +7,6 @@ import com.github.mimiknight.panda.model.response.HealthCheckResponse;
 import com.github.mimiknight.panda.model.response.QueryArticleResponse;
 import com.github.mimiknight.panda.model.response.SaveArticleResponse;
 import com.github.mimiknight.panda.model.response.UploadArticleImageResponse;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
@@ -20,7 +19,7 @@ public class ApiStandard {
      */
     public interface Health {
 
-        ResponseEntity<HealthCheckResponse> check() throws Exception;
+        HealthCheckResponse check() throws Exception;
     }
 
     /**
@@ -28,13 +27,13 @@ public class ApiStandard {
      */
     public interface Article {
 
-        ResponseEntity<SaveArticleResponse> publishArticle(SaveArticleRequest request) throws Exception;
+        SaveArticleResponse publishArticle(SaveArticleRequest request) throws Exception;
 
-        ResponseEntity<QueryArticleResponse> queryArticleById(QueryArticleRequest request) throws Exception;
+        QueryArticleResponse queryArticleById(QueryArticleRequest request) throws Exception;
 
-        ResponseEntity<UploadArticleImageResponse> batchUploadArticleImage(List<MultipartFile> files) throws Exception;
+        UploadArticleImageResponse batchUploadArticleImage(List<MultipartFile> files) throws Exception;
 
-        ResponseEntity<StreamingResponseBody> downloadArticleImage(DownloadArticleImageRequest request) throws Exception;
+        StreamingResponseBody downloadArticleImage(DownloadArticleImageRequest request) throws Exception;
 
     }
 }

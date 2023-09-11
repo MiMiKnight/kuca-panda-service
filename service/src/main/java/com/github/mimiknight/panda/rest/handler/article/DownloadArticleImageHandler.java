@@ -1,24 +1,28 @@
 package com.github.mimiknight.panda.rest.handler.article;
 
 import com.github.mimiknight.kuca.ecology.handler.EcologyRequestHandler;
-import com.github.mimiknight.kuca.ecology.model.response.StreamFileResponse;
+import com.github.mimiknight.kuca.ecology.model.response.StreamingResponse;
 import com.github.mimiknight.panda.model.request.DownloadArticleImageRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.List;
 
 @Slf4j
 @Component
-public class DownloadArticleImageHandler implements EcologyRequestHandler<DownloadArticleImageRequest, StreamFileResponse> {
+public class DownloadArticleImageHandler implements EcologyRequestHandler<DownloadArticleImageRequest, StreamingResponse> {
+
+    @Autowired
+    private HttpServletResponse servletResponse;
 
     @Override
-    public void handle(DownloadArticleImageRequest request, StreamFileResponse response) throws Exception {
+    public void handle(DownloadArticleImageRequest request, StreamingResponse response) throws Exception {
         log.info("download-article-image");
         List<String> imageIds = request.getImageIds();
 
@@ -37,14 +41,12 @@ public class DownloadArticleImageHandler implements EcologyRequestHandler<Downlo
             inputStream.close();
         };
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.add("Content-Disposition", String.format("attachment; filename=%s", file.getFilename()));
-        headers.add("Pragma", "no-cache");
-        headers.add("Expires", "0");
+        // 设置响应头
+        servletResponse.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, must-revalidate");
+        servletResponse.setHeader(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=%s", file.getFilename()));
+        servletResponse.setHeader(HttpHeaders.PRAGMA, "no-cache");
+        servletResponse.setHeader(HttpHeaders.EXPIRES, "0");
 
-        response.setHeader(headers);
-        response.setMediaType(MediaType.IMAGE_JPEG);
         response.setBody(body);
 
     }

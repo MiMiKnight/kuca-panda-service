@@ -1,4 +1,4 @@
-package com.github.mimiknight.panda.model.response;
+package com.github.mimiknight.panda.model.response.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,7 +9,7 @@ import java.time.ZonedDateTime;
 
 @Setter
 @Getter
-public class ArticleVO {
+public class QueryArticleVo {
 
     /**
      * 文章主键

@@ -8,6 +8,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 /**
  * 全局异常处理切面
@@ -47,7 +48,22 @@ public class HandleGlobalExceptionAspect {
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     public ExceptionResponse handle(MissingServletRequestParameterException e) {
         return ExceptionResponse.builder()
-                .errorCode("101.F0000")
+                .errorCode("101.F0001")
+                .errorType("System Exception")
+                .data("Default Exception").build();
+    }
+
+    /**
+     * 参数类型不匹配异常
+     *
+     * @param e MethodArgumentTypeMismatchException
+     * @return {@link ExceptionResponse}
+     */
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
+    public ExceptionResponse handle(MethodArgumentTypeMismatchException e) {
+        return ExceptionResponse.builder()
+                .errorCode("101.F0002")
                 .errorType("System Exception")
                 .data("Default Exception").build();
     }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 /**
  * 全局异常处理切面
@@ -73,6 +74,23 @@ public class HandleGlobalExceptionAspect {
     }
 
     /**
+     * 缺失Servlet请求组件异常
+     * <p>
+     * 400
+     *
+     * @param e MissingServletRequestPartException
+     * @return {@link ExceptionResponse}
+     */
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = MissingServletRequestPartException.class)
+    public ExceptionResponse handle(MissingServletRequestPartException e) {
+        return ExceptionResponse.builder()
+                .errorCode("101.F0002")
+                .errorType("System Exception")
+                .data("Default Exception").build();
+    }
+
+    /**
      * 参数类型不匹配异常
      * <p>
      * 400
@@ -88,4 +106,5 @@ public class HandleGlobalExceptionAspect {
                 .errorType("System Exception")
                 .data("Default Exception").build();
     }
+
 }

@@ -1,8 +1,11 @@
 package com.github.mimiknight.panda.common.aspect;
 
+import com.github.mimiknight.panda.common.exception.ServiceException;
 import com.github.mimiknight.panda.model.response.ExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -26,6 +29,24 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @Component
 @RestControllerAdvice
 public class HandleGlobalExceptionAspect {
+
+    /**
+     * 自定义异常
+     *
+     * @param e 异常类型 {@link Throwable}
+     * @return {@link ExceptionResponse}<{@link ?}>
+     */
+    @ExceptionHandler(value = ServiceException.class)
+    public ResponseEntity<ExceptionResponse> handle(ServiceException e) {
+        // 响应状态码
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        // 响应体
+        ExceptionResponse body = ExceptionResponse.builder()
+                .errorCode("101.F0000")
+                .errorType("System Exception")
+                .data("Default Exception").build();
+        return ResponseEntity.status(status).contentType(MediaType.APPLICATION_JSON).body(body);
+    }
 
     /**
      * 默认异常处理

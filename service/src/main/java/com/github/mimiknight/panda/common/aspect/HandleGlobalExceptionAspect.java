@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -98,6 +99,24 @@ public class HandleGlobalExceptionAspect {
 
 
     /**
+     * 不支持 HTTP 请求方法异常
+     * <p>
+     * 400
+     *
+     * @param e {@link HttpRequestMethodNotSupportedException}
+     * @return {@link ExceptionResponse}
+     */
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    public ExceptionResponse handle(HttpRequestMethodNotSupportedException e) {
+        return ExceptionResponse.builder()
+                .errorCode("101.F0002")
+                .errorType("System Exception")
+                .data("Default Exception").build();
+    }
+
+
+    /**
      * 缺失Servlet请求参数异常
      * <p>
      * 400
@@ -167,5 +186,6 @@ public class HandleGlobalExceptionAspect {
                 .errorType("System Exception")
                 .data("Default Exception").build();
     }
+
 
 }

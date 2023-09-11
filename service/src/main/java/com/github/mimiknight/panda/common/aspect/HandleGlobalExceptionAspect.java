@@ -4,6 +4,7 @@ import com.github.mimiknight.panda.model.response.ExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -57,11 +58,28 @@ public class HandleGlobalExceptionAspect {
     }
 
     /**
+     * Http媒体类型不支持异常
+     * <p>
+     * 500
+     *
+     * @param e 异常类型 {@link HttpMediaTypeNotSupportedException}
+     * @return {@link ExceptionResponse}
+     */
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
+    public ExceptionResponse handle(HttpMediaTypeNotSupportedException e) {
+        return ExceptionResponse.builder()
+                .errorCode("101.F0000")
+                .errorType("System Exception")
+                .data("Default Exception").build();
+    }
+
+    /**
      * 缺失Servlet请求参数异常
      * <p>
      * 400
      *
-     * @param e MissingServletRequestParameterException
+     * @param e {@link MissingServletRequestParameterException}
      * @return {@link ExceptionResponse}
      */
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
@@ -78,7 +96,7 @@ public class HandleGlobalExceptionAspect {
      * <p>
      * 400
      *
-     * @param e MissingServletRequestPartException
+     * @param e {@link MissingServletRequestPartException}
      * @return {@link ExceptionResponse}
      */
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
@@ -95,7 +113,7 @@ public class HandleGlobalExceptionAspect {
      * <p>
      * 400
      *
-     * @param e MethodArgumentTypeMismatchException
+     * @param e {@link MethodArgumentTypeMismatchException}
      * @return {@link ExceptionResponse}
      */
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)

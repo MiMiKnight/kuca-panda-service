@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -109,6 +110,24 @@ public class HandleGlobalExceptionAspect {
     public ExceptionResponse handle(MissingServletRequestParameterException e) {
         return ExceptionResponse.builder()
                 .errorCode("101.F0001")
+                .errorType("System Exception")
+                .data("Default Exception").build();
+    }
+
+
+    /**
+     * 缺失请求头异常
+     * <p>
+     * 400
+     *
+     * @param e {@link MissingRequestHeaderException}
+     * @return {@link ExceptionResponse}
+     */
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(value = MissingRequestHeaderException.class)
+    public ExceptionResponse handle(MissingRequestHeaderException e) {
+        return ExceptionResponse.builder()
+                .errorCode("101.F0002")
                 .errorType("System Exception")
                 .data("Default Exception").build();
     }

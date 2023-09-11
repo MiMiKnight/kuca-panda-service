@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -65,7 +66,6 @@ public class HandleGlobalExceptionAspect {
                 .data("Default Exception").build();
     }
 
-
     /**
      * 默认异常处理
      * <p>
@@ -82,7 +82,6 @@ public class HandleGlobalExceptionAspect {
                 .errorType("System Exception")
                 .data("Default Exception").build();
     }
-
 
     /**
      * 不支持 HTTP 媒体类型异常
@@ -101,7 +100,6 @@ public class HandleGlobalExceptionAspect {
                 .data("Default Exception").build();
     }
 
-
     /**
      * HTTP 消息不可读异常
      * <p>
@@ -119,6 +117,22 @@ public class HandleGlobalExceptionAspect {
                 .data("Default Exception").build();
     }
 
+    /**
+     * http 消息不可写异常
+     * <p>
+     * 500
+     *
+     * @param e 异常类型 {@link HttpMessageNotWritableException}
+     * @return {@link ExceptionResponse}
+     */
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(value = HttpMessageNotWritableException.class)
+    public ExceptionResponse handle(HttpMessageNotWritableException e) {
+        return ExceptionResponse.builder()
+                .errorCode("101.F0000")
+                .errorType("System Exception")
+                .data("Default Exception").build();
+    }
 
     /**
      * 缺失Servlet请求参数异常
@@ -137,7 +151,6 @@ public class HandleGlobalExceptionAspect {
                 .data("Default Exception").build();
     }
 
-
     /**
      * 缺失请求头异常
      * <p>
@@ -154,7 +167,6 @@ public class HandleGlobalExceptionAspect {
                 .errorType("System Exception")
                 .data("Default Exception").build();
     }
-
 
     /**
      * 缺失Servlet请求组件异常
@@ -173,7 +185,6 @@ public class HandleGlobalExceptionAspect {
                 .data("Default Exception").build();
     }
 
-
     /**
      * 参数类型不匹配异常
      * <p>
@@ -190,7 +201,6 @@ public class HandleGlobalExceptionAspect {
                 .errorType("System Exception")
                 .data("Default Exception").build();
     }
-
 
     /**
      * 未找到处理程序异常
@@ -209,7 +219,6 @@ public class HandleGlobalExceptionAspect {
                 .data("Default Exception").build();
     }
 
-
     /**
      * 不支持 HTTP 请求方法异常
      * <p>
@@ -226,6 +235,5 @@ public class HandleGlobalExceptionAspect {
                 .errorType("System Exception")
                 .data("Default Exception").build();
     }
-
 
 }

@@ -3,6 +3,7 @@ package com.github.mimiknight.panda.common.aspect;
 import com.github.mimiknight.panda.model.response.ExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -40,6 +41,7 @@ public class HandleGlobalExceptionAspect {
                 .data("Default Exception").build();
     }
 
+
     /**
      * 默认异常处理
      * <p>
@@ -57,8 +59,9 @@ public class HandleGlobalExceptionAspect {
                 .data("Default Exception").build();
     }
 
+
     /**
-     * Http媒体类型不支持异常
+     * 不支持 HTTP 媒体类型异常
      * <p>
      * 500
      *
@@ -73,6 +76,25 @@ public class HandleGlobalExceptionAspect {
                 .errorType("System Exception")
                 .data("Default Exception").build();
     }
+
+
+    /**
+     * HTTP 消息不可读异常
+     * <p>
+     * 500
+     *
+     * @param e 异常类型 {@link HttpMessageNotReadableException}
+     * @return {@link ExceptionResponse}
+     */
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public ExceptionResponse handle(HttpMessageNotReadableException e) {
+        return ExceptionResponse.builder()
+                .errorCode("101.F0000")
+                .errorType("System Exception")
+                .data("Default Exception").build();
+    }
+
 
     /**
      * 缺失Servlet请求参数异常
@@ -91,6 +113,7 @@ public class HandleGlobalExceptionAspect {
                 .data("Default Exception").build();
     }
 
+
     /**
      * 缺失Servlet请求组件异常
      * <p>
@@ -107,6 +130,7 @@ public class HandleGlobalExceptionAspect {
                 .errorType("System Exception")
                 .data("Default Exception").build();
     }
+
 
     /**
      * 参数类型不匹配异常

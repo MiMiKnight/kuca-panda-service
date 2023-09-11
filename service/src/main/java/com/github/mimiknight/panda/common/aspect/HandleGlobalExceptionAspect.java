@@ -26,6 +26,23 @@ public class HandleGlobalExceptionAspect {
      * <p>
      * 500
      *
+     * @param e 异常类型 {@link Throwable}
+     * @return {@link ExceptionResponse}<{@link ?}>
+     */
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(value = Throwable.class)
+    public ExceptionResponse handle(Throwable e) {
+        return ExceptionResponse.builder()
+                .errorCode("101.F0000")
+                .errorType("System Exception")
+                .data("Default Exception").build();
+    }
+
+    /**
+     * 默认异常处理
+     * <p>
+     * 500
+     *
      * @param e 异常类型 {@link Exception}
      * @return {@link ExceptionResponse}<{@link ?}>
      */
@@ -40,6 +57,8 @@ public class HandleGlobalExceptionAspect {
 
     /**
      * 缺失Servlet请求参数异常
+     * <p>
+     * 400
      *
      * @param e MissingServletRequestParameterException
      * @return {@link ExceptionResponse}
@@ -55,6 +74,8 @@ public class HandleGlobalExceptionAspect {
 
     /**
      * 参数类型不匹配异常
+     * <p>
+     * 400
      *
      * @param e MethodArgumentTypeMismatchException
      * @return {@link ExceptionResponse}

@@ -100,24 +100,6 @@ public class HandleGlobalExceptionAspect {
 
 
     /**
-     * 不支持 HTTP 请求方法异常
-     * <p>
-     * 400
-     *
-     * @param e {@link HttpRequestMethodNotSupportedException}
-     * @return {@link ExceptionResponse}
-     */
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
-    public ExceptionResponse handle(HttpRequestMethodNotSupportedException e) {
-        return ExceptionResponse.builder()
-                .errorCode("101.F0002")
-                .errorType("System Exception")
-                .data("Default Exception").build();
-    }
-
-
-    /**
      * 缺失Servlet请求参数异常
      * <p>
      * 400
@@ -200,6 +182,24 @@ public class HandleGlobalExceptionAspect {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler(value = NoHandlerFoundException.class)
     public ExceptionResponse handle(NoHandlerFoundException e) {
+        return ExceptionResponse.builder()
+                .errorCode("101.F0002")
+                .errorType("System Exception")
+                .data("Default Exception").build();
+    }
+
+
+    /**
+     * 不支持 HTTP 请求方法异常
+     * <p>
+     * 405
+     *
+     * @param e {@link HttpRequestMethodNotSupportedException}
+     * @return {@link ExceptionResponse}
+     */
+    @ResponseStatus(value = HttpStatus.METHOD_NOT_ALLOWED)
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    public ExceptionResponse handle(HttpRequestMethodNotSupportedException e) {
         return ExceptionResponse.builder()
                 .errorCode("101.F0002")
                 .errorType("System Exception")

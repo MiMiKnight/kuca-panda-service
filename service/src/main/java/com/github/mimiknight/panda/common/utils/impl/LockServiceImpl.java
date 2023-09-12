@@ -2,11 +2,11 @@ package com.github.mimiknight.panda.common.utils.impl;
 
 import com.github.mimiknight.kuca.utils.service.standard.RedisLockService;
 import com.github.mimiknight.panda.common.constant.Constant;
+import com.github.mimiknight.panda.common.enumeration.ErrorReturn;
 import com.github.mimiknight.panda.common.exception.ServiceException;
 import com.github.mimiknight.panda.common.utils.standard.LockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
@@ -40,8 +40,7 @@ public class LockServiceImpl implements LockService {
         // 如果获取锁失败则抛出异常
         if (!getLockCode.test(lockName)) {
             log.info("Failed to get the lock,lock = {}", lockName);
-            // TODO 完善异常
-            throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR, "107.40100001", "Failed to get the lock.");
+            throw new ServiceException(ErrorReturn.GET_LOCK_FAILED);
         }
         try {
             return lockedCode.get();
@@ -61,8 +60,7 @@ public class LockServiceImpl implements LockService {
         // 如果获取锁失败则抛出异常
         if (!getLockCode.test(lockName)) {
             log.info("Failed to get the lock,lock = {}", lockName);
-            // TODO 完善异常
-            throw new ServiceException(HttpStatus.INTERNAL_SERVER_ERROR, "107.40100001", "Failed to get the lock.");
+            throw new ServiceException(ErrorReturn.GET_LOCK_FAILED);
         }
         try {
             lockedCode.run();

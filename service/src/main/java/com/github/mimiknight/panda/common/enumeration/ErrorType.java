@@ -34,11 +34,11 @@ public enum ErrorType {
     METHOD_NOT_ALLOWED("Method Not Allowed", HttpStatus.METHOD_NOT_ALLOWED),
 
     /**
-     * 默认异常
+     * 系统异常
      * <p>
      * 500
      */
-    DEFAULT_EXCEPTION("System Unknown Exception", HttpStatus.INTERNAL_SERVER_ERROR),
+    SYSTEM_EXCEPTION("System Exception", HttpStatus.INTERNAL_SERVER_ERROR),
 
     /**
      * 业务异常

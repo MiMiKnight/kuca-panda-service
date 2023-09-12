@@ -30,6 +30,11 @@ import lombok.Getter;
 public enum ErrorReturn {
 
     //************************************系统异常*************************************//
+    SYSTEM_FATAL_ERROR(ErrorCode.SYSTEM_CODE_001, ErrorType.SYSTEM_EXCEPTION, "System fatal exception."),
+    SYSTEM_NON_RUNTIME_ERROR(ErrorCode.SYSTEM_CODE_002, ErrorType.SYSTEM_EXCEPTION, "System non-runtime exception."),
+    SYSTEM_RUNTIME_ERROR(ErrorCode.SYSTEM_CODE_003, ErrorType.SYSTEM_EXCEPTION, "System runtime exception."),
+
+    //*********************************资源未找到异常************************************//
 
     //********************************手动参数校验异常***********************************//
 

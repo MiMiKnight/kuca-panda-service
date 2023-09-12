@@ -1,5 +1,7 @@
 package com.github.mimiknight.panda.common.aspect;
 
+import com.github.mimiknight.panda.common.enumeration.ErrorReturn;
+import com.github.mimiknight.panda.common.enumeration.ErrorType;
 import com.github.mimiknight.panda.common.exception.ServiceException;
 import com.github.mimiknight.panda.model.response.ExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -32,55 +34,53 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 public class HandleGlobalExceptionAspect {
 
     /**
-     * 自定义异常
+     * 自定义服务异常
      *
      * @param e 异常类型 {@link Throwable}
      * @return {@link ExceptionResponse}<{@link ?}>
      */
     @ExceptionHandler(value = ServiceException.class)
     public ResponseEntity<ExceptionResponse> handle(ServiceException e) {
-        // 响应状态码
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        // 响应体
-        ExceptionResponse body = ExceptionResponse.builder()
-                .errorCode("101.F0000")
-                .errorType("System Exception")
-                .data("Default Exception").build();
-        return ResponseEntity.status(status).contentType(MediaType.APPLICATION_JSON).body(body);
+        return build(e.getErrorReturn());
     }
 
     /**
-     * 默认异常处理
+     * 系统致命异常处理
      * <p>
      * 500
      *
      * @param e 异常类型 {@link Throwable}
      * @return {@link ExceptionResponse}<{@link ?}>
      */
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = Throwable.class)
-    public ExceptionResponse handle(Throwable e) {
-        return ExceptionResponse.builder()
-                .errorCode("101.F0000")
-                .errorType("System Exception")
-                .data("Default Exception").build();
+    public ResponseEntity<ExceptionResponse> handle(Throwable e) {
+        return build(ErrorReturn.SYSTEM_FATAL_ERROR);
     }
 
     /**
-     * 默认异常处理
+     * 系统非运行时异常处理
      * <p>
      * 500
      *
      * @param e 异常类型 {@link Exception}
-     * @return {@link ExceptionResponse}<{@link ?}>
+     * @return {@link ExceptionResponse}
      */
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = Exception.class)
-    public ExceptionResponse handle(Exception e) {
-        return ExceptionResponse.builder()
-                .errorCode("101.F0000")
-                .errorType("System Exception")
-                .data("Default Exception").build();
+    public ResponseEntity<ExceptionResponse> handle(Exception e) {
+        return build(ErrorReturn.SYSTEM_NON_RUNTIME_ERROR);
+    }
+
+    /**
+     * 系统运行时异常处理
+     * <p>
+     * 500
+     *
+     * @param e 异常类型 {@link Exception}
+     * @return {@link ExceptionResponse}
+     */
+    @ExceptionHandler(value = RuntimeException.class)
+    public ResponseEntity<ExceptionResponse> handle(RuntimeException e) {
+        return build(ErrorReturn.SYSTEM_RUNTIME_ERROR);
     }
 
     /**
@@ -91,13 +91,10 @@ public class HandleGlobalExceptionAspect {
      * @param e 异常类型 {@link HttpMediaTypeNotSupportedException}
      * @return {@link ExceptionResponse}
      */
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
-    public ExceptionResponse handle(HttpMediaTypeNotSupportedException e) {
-        return ExceptionResponse.builder()
-                .errorCode("101.F0000")
-                .errorType("System Exception")
-                .data("Default Exception").build();
+    public ResponseEntity<ExceptionResponse> handle(HttpMediaTypeNotSupportedException e) {
+        // TODO 待完善
+        return null;
     }
 
     /**
@@ -108,13 +105,10 @@ public class HandleGlobalExceptionAspect {
      * @param e 异常类型 {@link HttpMessageNotReadableException}
      * @return {@link ExceptionResponse}
      */
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
-    public ExceptionResponse handle(HttpMessageNotReadableException e) {
-        return ExceptionResponse.builder()
-                .errorCode("101.F0000")
-                .errorType("System Exception")
-                .data("Default Exception").build();
+    public ResponseEntity<ExceptionResponse> handle(HttpMessageNotReadableException e) {
+        // TODO 待完善
+        return null;
     }
 
     /**
@@ -125,13 +119,10 @@ public class HandleGlobalExceptionAspect {
      * @param e 异常类型 {@link HttpMessageNotWritableException}
      * @return {@link ExceptionResponse}
      */
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = HttpMessageNotWritableException.class)
-    public ExceptionResponse handle(HttpMessageNotWritableException e) {
-        return ExceptionResponse.builder()
-                .errorCode("101.F0000")
-                .errorType("System Exception")
-                .data("Default Exception").build();
+    public ResponseEntity<ExceptionResponse> handle(HttpMessageNotWritableException e) {
+        // TODO 待完善
+        return null;
     }
 
     /**
@@ -142,13 +133,10 @@ public class HandleGlobalExceptionAspect {
      * @param e {@link MissingServletRequestParameterException}
      * @return {@link ExceptionResponse}
      */
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
-    public ExceptionResponse handle(MissingServletRequestParameterException e) {
-        return ExceptionResponse.builder()
-                .errorCode("101.F0001")
-                .errorType("System Exception")
-                .data("Default Exception").build();
+    public ResponseEntity<ExceptionResponse> handle(MissingServletRequestParameterException e) {
+        // TODO 待完善
+        return null;
     }
 
     /**
@@ -161,11 +149,9 @@ public class HandleGlobalExceptionAspect {
      */
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = MissingRequestHeaderException.class)
-    public ExceptionResponse handle(MissingRequestHeaderException e) {
-        return ExceptionResponse.builder()
-                .errorCode("101.F0002")
-                .errorType("System Exception")
-                .data("Default Exception").build();
+    public ResponseEntity<ExceptionResponse> handle(MissingRequestHeaderException e) {
+        // TODO 待完善
+        return null;
     }
 
     /**
@@ -176,13 +162,10 @@ public class HandleGlobalExceptionAspect {
      * @param e {@link MissingServletRequestPartException}
      * @return {@link ExceptionResponse}
      */
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = MissingServletRequestPartException.class)
-    public ExceptionResponse handle(MissingServletRequestPartException e) {
-        return ExceptionResponse.builder()
-                .errorCode("101.F0002")
-                .errorType("System Exception")
-                .data("Default Exception").build();
+    public ResponseEntity<ExceptionResponse> handle(MissingServletRequestPartException e) {
+        // TODO 待完善
+        return null;
     }
 
     /**
@@ -193,13 +176,10 @@ public class HandleGlobalExceptionAspect {
      * @param e {@link MethodArgumentTypeMismatchException}
      * @return {@link ExceptionResponse}
      */
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
-    public ExceptionResponse handle(MethodArgumentTypeMismatchException e) {
-        return ExceptionResponse.builder()
-                .errorCode("101.F0002")
-                .errorType("System Exception")
-                .data("Default Exception").build();
+    public ResponseEntity<ExceptionResponse> handle(MethodArgumentTypeMismatchException e) {
+        // TODO 待完善
+        return null;
     }
 
     /**
@@ -210,13 +190,10 @@ public class HandleGlobalExceptionAspect {
      * @param e {@link NoHandlerFoundException}
      * @return {@link ExceptionResponse}
      */
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler(value = NoHandlerFoundException.class)
-    public ExceptionResponse handle(NoHandlerFoundException e) {
-        return ExceptionResponse.builder()
-                .errorCode("101.F0002")
-                .errorType("System Exception")
-                .data("Default Exception").build();
+    public ResponseEntity<ExceptionResponse> handle(NoHandlerFoundException e) {
+        // TODO 待完善
+        return null;
     }
 
     /**
@@ -229,11 +206,18 @@ public class HandleGlobalExceptionAspect {
      */
     @ResponseStatus(value = HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
-    public ExceptionResponse handle(HttpRequestMethodNotSupportedException e) {
-        return ExceptionResponse.builder()
-                .errorCode("101.F0002")
-                .errorType("System Exception")
-                .data("Default Exception").build();
+    public ResponseEntity<ExceptionResponse> handle(HttpRequestMethodNotSupportedException e) {
+        // TODO 待完善
+        return null;
     }
 
+    private ResponseEntity<ExceptionResponse> build(ErrorReturn errorReturn) {
+        String errorCode = errorReturn.getErrorCode();
+        String message = errorReturn.getMessage();
+        ErrorType errorType = errorReturn.getErrorType();
+        String errorTypeName = errorType.getName();
+        int statusCode = errorType.getStatusCode();
+        ExceptionResponse body = ExceptionResponse.builder().errorCode(errorCode).errorType(errorTypeName).data(message).build();
+        return ResponseEntity.status(statusCode).contentType(MediaType.APPLICATION_JSON).body(body);
+    }
 }

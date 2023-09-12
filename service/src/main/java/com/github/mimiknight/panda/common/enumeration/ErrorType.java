@@ -34,6 +34,13 @@ public enum ErrorType {
     METHOD_NOT_ALLOWED("Method Not Allowed", HttpStatus.METHOD_NOT_ALLOWED),
 
     /**
+     * 客户端异常
+     * <p>
+     * 406
+     */
+    CLIENT_EXCEPTION("Client Exception", HttpStatus.NOT_ACCEPTABLE),
+
+    /**
      * 系统异常
      * <p>
      * 500
@@ -41,19 +48,11 @@ public enum ErrorType {
     SYSTEM_EXCEPTION("System Exception", HttpStatus.INTERNAL_SERVER_ERROR),
 
     /**
-     * 客户端异常
-     * <p>
-     * 500
-     */
-    CLIENT_EXCEPTION("Client Exception", HttpStatus.INTERNAL_SERVER_ERROR),
-
-
-    /**
      * 服务端异常
      * <p>
      * 500
      */
-    SERVICE_EXCEPTION("Service Exception", HttpStatus.INTERNAL_SERVER_ERROR),
+    SERVER_EXCEPTION("Server Exception", HttpStatus.INTERNAL_SERVER_ERROR),
 
     /**
      * 业务异常

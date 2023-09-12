@@ -30,29 +30,42 @@ import lombok.Getter;
 public enum ErrorReturn {
 
     //************************************系统异常*************************************//
-    SYSTEM_FATAL_ERROR(ErrorCode.SYSTEM_CODE_001, ErrorType.SYSTEM_EXCEPTION, "System fatal exception."),
-    SYSTEM_NON_RUNTIME_ERROR(ErrorCode.SYSTEM_CODE_002, ErrorType.SYSTEM_EXCEPTION, "System non-runtime exception."),
-    SYSTEM_RUNTIME_ERROR(ErrorCode.SYSTEM_CODE_003, ErrorType.SYSTEM_EXCEPTION, "System runtime exception."),
+    SYSTEM_FATAL_ERROR(ErrorCode.SYSTEM_001, ErrorType.SYSTEM_EXCEPTION, "System fatal exception."),
+    SYSTEM_NON_RUNTIME_ERROR(ErrorCode.SYSTEM_002, ErrorType.SYSTEM_EXCEPTION, "System non-runtime exception."),
+    SYSTEM_RUNTIME_ERROR(ErrorCode.SYSTEM_003, ErrorType.SYSTEM_EXCEPTION, "System runtime exception."),
 
     //*********************************资源未找到异常************************************//
-    NO_HANDLER_FOUND_ERROR(ErrorCode.NOT_FOUND_CODE_001, ErrorType.RESOURCE_NOT_FOUND, "No handler found exception"),
+    NO_HANDLER_FOUND_ERROR(ErrorCode.NOT_FOUND_001, ErrorType.RESOURCE_NOT_FOUND, "No handler found exception"),
+
     //*******************************请求方法不允许异常***********************************//
-    HTTP_REQUEST_METHOD_NOT_SUPPORTED_ERROR(ErrorCode.METHOD_NOT_ALLOWED_CODE_001, ErrorType.METHOD_NOT_ALLOWED, "Http request method not supported exception"),
+    HTTP_REQUEST_METHOD_NOT_SUPPORTED_ERROR(ErrorCode.METHOD_NOT_ALLOWED_001, ErrorType.METHOD_NOT_ALLOWED, "Http request method not supported exception"),
 
     //********************************手动参数校验异常***********************************//
-    MISSING_SERVLET_REQUEST_PARAMETER_ERROR(ErrorCode.MANUAL_VALID_CODE_001, ErrorType.PARAM_VALID_FAILED, "Missing servlet request parameter exception"),
-    MISSING_REQUEST_HEADER_ERROR(ErrorCode.MANUAL_VALID_CODE_002, ErrorType.PARAM_VALID_FAILED, "Missing request header exception"),
-    MISSING_SERVLET_REQUEST_PART_ERROR(ErrorCode.MANUAL_VALID_CODE_003, ErrorType.PARAM_VALID_FAILED, "Missing servlet request part error"),
-    METHOD_ARGUMENT_TYPE_MISMATCH_ERROR(ErrorCode.MANUAL_VALID_CODE_004, ErrorType.PARAM_VALID_FAILED, "Method argument type mismatch exception"),
+
+
+    //***********************************客户端异常*************************************//
+    HTTP_MEDIA_TYPE_NOT_SUPPORTED_ERROR(ErrorCode.CLIENT_001, ErrorType.CLIENT_EXCEPTION, "Http media type not supported exception"),
+    HTTP_MESSAGE_NOT_READABLE_ERROR(ErrorCode.CLIENT_002, ErrorType.CLIENT_EXCEPTION, "Http message not readable exception"),
+
+    //***********************************服务端异常*************************************//
+    HTTP_MESSAGE_NOT_WRITABLE_ERROR(ErrorCode.SERVER_001, ErrorType.SERVER_EXCEPTION, "Http message not writable exception"),
+
+    //********************************手动参数校验异常***********************************//
+    MISSING_SERVLET_REQUEST_PARAMETER_ERROR(ErrorCode.MANUAL_VALID_001, ErrorType.PARAM_VALID_FAILED, "Missing servlet request parameter exception"),
+    MISSING_REQUEST_HEADER_ERROR(ErrorCode.MANUAL_VALID_002, ErrorType.PARAM_VALID_FAILED, "Missing request header exception"),
+    MISSING_SERVLET_REQUEST_PART_ERROR(ErrorCode.MANUAL_VALID_003, ErrorType.PARAM_VALID_FAILED, "Missing servlet request part error"),
+    METHOD_ARGUMENT_TYPE_MISMATCH_ERROR(ErrorCode.MANUAL_VALID_004, ErrorType.PARAM_VALID_FAILED, "Method argument type mismatch exception"),
 
     //************************************业务异常*************************************//
 
     /**
      * 获取锁失败
      */
-    GET_LOCK_FAILED(ErrorCode.BUSINESS_CODE_001, ErrorType.BUSINESS_EXCEPTION, "Failed to get the lock.");
+    GET_LOCK_FAILED(ErrorCode.BUSINESS_001, ErrorType.BUSINESS_EXCEPTION, "Failed to get the lock.");
 
     //**********************************调用接口异常************************************//
+    //************************************SQL异常**(**********************************//
+    //***********************************数据库异常************************************//
 
     //********************************************************************************************************//
 

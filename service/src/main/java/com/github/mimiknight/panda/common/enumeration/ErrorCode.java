@@ -19,41 +19,52 @@ package com.github.mimiknight.panda.common.enumeration;
  * @since 2023-05-02 15:42:51
  */
 public interface ErrorCode {
-    String SUCCESS_CODE = "00-000-000";
+    String SUCCESS = "00-00-000";
 
     //************************************系统异常*************************************//
-    String SYSTEM_CODE_001 = "99-001-001";
-    String SYSTEM_CODE_002 = "99-001-002";
-    String SYSTEM_CODE_003 = "99-001-003";
+    String SYSTEM_001 = "99-00-001";
+    String SYSTEM_002 = "99-00-002";
+    String SYSTEM_003 = "99-00-003";
 
     //*********************************资源未找到异常************************************//
-    String NOT_FOUND_CODE_001 = "99-001-001";
+    String NOT_FOUND_001 = "98-00-001";
     //*********************************方法不支持异常***********************************//
-    String METHOD_NOT_ALLOWED_CODE_001 = "99-001-001";
+    String METHOD_NOT_ALLOWED_001 = "98-01-001";
+
+    //***********************************客户端异常*************************************//
+    String CLIENT_001 = "96-01-001";
+    String CLIENT_002 = "96-01-002";
+
+    //***********************************服务端异常*************************************//
+    String SERVER_001 = "95-01-001";
+    String SERVER_002 = "95-01-002";
 
     //********************************注解参数校验异常***********************************//
-    String ANNOTATION_VALID_CODE_001 = "98-001-001";
-    String ANNOTATION_VALID_CODE_002 = "98-001-002";
-    String ANNOTATION_VALID_CODE_003 = "98-001-003";
+    String ANNOTATION_VALID_001 = "97-01-001";
+    String ANNOTATION_VALID_002 = "97-01-002";
+    String ANNOTATION_VALID_003 = "97-01-003";
 
     //********************************手动参数校验异常***********************************//
-    String MANUAL_VALID_CODE_001 = "97-001-001";
-    String MANUAL_VALID_CODE_002 = "97-001-002";
-    String MANUAL_VALID_CODE_003 = "97-001-003";
-    String MANUAL_VALID_CODE_004 = "97-001-004";
+    String MANUAL_VALID_001 = "97-001-001";
+    String MANUAL_VALID_002 = "97-001-002";
+    String MANUAL_VALID_003 = "97-001-003";
+    String MANUAL_VALID_004 = "97-001-004";
 
     //************************************业务异常*************************************//
-    String BUSINESS_CODE_001 = "96-001-001";
-    String BUSINESS_CODE_002 = "96-001-002";
-    String BUSINESS_CODE_003 = "96-001-003";
+    String BUSINESS_001 = "96-001-001";
+    String BUSINESS_002 = "96-001-002";
+    String BUSINESS_003 = "96-001-003";
 
     //************************************调用第三方接口异常******************************//
-    String CALL_API_CODE_001 = "95-001-001";
-    String CALL_API_CODE_002 = "95-001-002";
+    String CALL_API_001 = "95-001-001";
+    String CALL_API_002 = "95-001-002";
 
     //************************************SQL异常**************************************//
-    String SQL_CODE_001 = "94-001-001";
-    String SQL_CODE_002 = "94-001-002";
+    String SQL_001 = "94-001-001";
+    String SQL_002 = "94-001-002";
+
+    //***********************************数据库异常*************************************//
+    String DB_001 = "94-001-002";
 
 
 }

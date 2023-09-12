@@ -108,7 +108,7 @@ public class HandleGlobalExceptionAspect {
      */
     @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
     public ResponseEntity<ExceptionResponse> handle(HttpMediaTypeNotSupportedException e) {
-        return build(ErrorReturn.SYSTEM_FATAL_ERROR);
+        return build(ErrorReturn.HTTP_MEDIA_TYPE_NOT_SUPPORTED_ERROR);
     }
 
     /**
@@ -121,8 +121,7 @@ public class HandleGlobalExceptionAspect {
      */
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     public ResponseEntity<ExceptionResponse> handle(HttpMessageNotReadableException e) {
-        // TODO 待完善
-        return null;
+        return build(ErrorReturn.HTTP_MESSAGE_NOT_READABLE_ERROR);
     }
 
     /**
@@ -135,8 +134,7 @@ public class HandleGlobalExceptionAspect {
      */
     @ExceptionHandler(value = HttpMessageNotWritableException.class)
     public ResponseEntity<ExceptionResponse> handle(HttpMessageNotWritableException e) {
-        // TODO 待完善
-        return null;
+        return build(ErrorReturn.HTTP_MESSAGE_NOT_WRITABLE_ERROR);
     }
 
     /**

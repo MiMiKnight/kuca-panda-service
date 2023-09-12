@@ -35,15 +35,22 @@ public enum ErrorReturn {
     SYSTEM_RUNTIME_ERROR(ErrorCode.SYSTEM_CODE_003, ErrorType.SYSTEM_EXCEPTION, "System runtime exception."),
 
     //*********************************资源未找到异常************************************//
+    NO_HANDLER_FOUND_ERROR(ErrorCode.NOT_FOUND_CODE_001, ErrorType.RESOURCE_NOT_FOUND, "No handler found exception"),
+    //*******************************请求方法不允许异常***********************************//
+    HTTP_REQUEST_METHOD_NOT_SUPPORTED_ERROR(ErrorCode.METHOD_NOT_ALLOWED_CODE_001, ErrorType.METHOD_NOT_ALLOWED, "Http request method not supported exception"),
 
     //********************************手动参数校验异常***********************************//
+    MISSING_SERVLET_REQUEST_PARAMETER_ERROR(ErrorCode.MANUAL_VALID_CODE_001, ErrorType.PARAM_VALID_FAILED, "Missing servlet request parameter exception"),
+    MISSING_REQUEST_HEADER_ERROR(ErrorCode.MANUAL_VALID_CODE_002, ErrorType.PARAM_VALID_FAILED, "Missing request header exception"),
+    MISSING_SERVLET_REQUEST_PART_ERROR(ErrorCode.MANUAL_VALID_CODE_003, ErrorType.PARAM_VALID_FAILED, "Missing servlet request part error"),
+    METHOD_ARGUMENT_TYPE_MISMATCH_ERROR(ErrorCode.MANUAL_VALID_CODE_004, ErrorType.PARAM_VALID_FAILED, "Method argument type mismatch exception"),
 
     //************************************业务异常*************************************//
 
     /**
      * 获取锁失败
      */
-    GET_LOCK_FAILED(ErrorCode.SERVICE_CODE_001, "Failed to get the lock.");
+    GET_LOCK_FAILED(ErrorCode.BUSINESS_CODE_001, ErrorType.BUSINESS_EXCEPTION, "Failed to get the lock.");
 
     //**********************************调用接口异常************************************//
 
@@ -76,15 +83,5 @@ public enum ErrorReturn {
         this.errorCode = errorCode;
         this.errorType = errorType;
         this.message = message;
-    }
-
-    /**
-     * 错误返回
-     *
-     * @param errorCode 错误代码
-     * @param message   错误提示消息
-     */
-    ErrorReturn(String errorCode, String message) {
-        this(errorCode, ErrorType.SERVICE_EXCEPTION, message);
     }
 }

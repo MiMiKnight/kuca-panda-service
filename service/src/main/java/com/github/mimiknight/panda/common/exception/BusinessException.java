@@ -10,19 +10,19 @@ import lombok.Getter;
  * @since 2023-03-10 19:04:16
  */
 @Getter
-public class ServiceException extends RuntimeException {
+public class BusinessException extends RuntimeException {
 
     private static final long serialVersionUID = -6162198998783603161L;
 
     private final ErrorReturn errorReturn;
 
 
-    public ServiceException(ErrorReturn errorReturn) {
+    public BusinessException(ErrorReturn errorReturn) {
         super(errorReturn.getErrorCode() + "::" + errorReturn.getMessage());
         this.errorReturn = errorReturn;
     }
 
-    public ServiceException(ErrorReturn errorReturn, Throwable cause) {
+    public BusinessException(ErrorReturn errorReturn, Throwable cause) {
         super(errorReturn.getErrorCode() + "::" + errorReturn.getMessage(), cause);
         this.errorReturn = errorReturn;
     }

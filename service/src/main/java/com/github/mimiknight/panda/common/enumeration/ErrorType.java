@@ -17,7 +17,7 @@ public enum ErrorType {
      * <p>
      * 400
      */
-    PARAMETER_VALID_FAILED("Parameter Validate Failed", HttpStatus.BAD_REQUEST),
+    PARAM_VALID_FAILED("Parameter Validate Failed", HttpStatus.BAD_REQUEST),
 
     /**
      * 资源未找到异常
@@ -41,11 +41,26 @@ public enum ErrorType {
     SYSTEM_EXCEPTION("System Exception", HttpStatus.INTERNAL_SERVER_ERROR),
 
     /**
-     * 业务异常
+     * 客户端异常
+     * <p>
+     * 500
+     */
+    CLIENT_EXCEPTION("Client Exception", HttpStatus.INTERNAL_SERVER_ERROR),
+
+
+    /**
+     * 服务端异常
      * <p>
      * 500
      */
     SERVICE_EXCEPTION("Service Exception", HttpStatus.INTERNAL_SERVER_ERROR),
+
+    /**
+     * 业务异常
+     * <p>
+     * 500
+     */
+    BUSINESS_EXCEPTION("Business Exception", HttpStatus.INTERNAL_SERVER_ERROR),
 
     /**
      * 调用接口异常

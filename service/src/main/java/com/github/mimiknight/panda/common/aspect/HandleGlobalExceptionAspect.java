@@ -2,7 +2,8 @@ package com.github.mimiknight.panda.common.aspect;
 
 import com.github.mimiknight.panda.common.enumeration.ErrorReturn;
 import com.github.mimiknight.panda.common.enumeration.ErrorType;
-import com.github.mimiknight.panda.common.exception.ServiceException;
+import com.github.mimiknight.panda.common.exception.BusinessException;
+import com.github.mimiknight.panda.common.exception.ParamValidException;
 import com.github.mimiknight.panda.model.response.ExceptionResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -10,14 +11,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
-import org.springframework.stereotype.Component;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -29,18 +29,33 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  * @since 2023-09-10 09:32:54
  */
 @Slf4j
-@Component
-@RestControllerAdvice
+@ControllerAdvice
 public class HandleGlobalExceptionAspect {
 
     /**
-     * 自定义服务异常
+     * 注解校验参数异常
+     */
+
+    /**
+     * 手动校验参数异常
      *
-     * @param e 异常类型 {@link Throwable}
+     * @param e 异常类型 {@link ParamValidException}
      * @return {@link ExceptionResponse}<{@link ?}>
      */
-    @ExceptionHandler(value = ServiceException.class)
-    public ResponseEntity<ExceptionResponse> handle(ServiceException e) {
+    @ExceptionHandler(value = ParamValidException.class)
+    public ResponseEntity<ExceptionResponse> handle(ParamValidException e) {
+        // TODO 待完善
+        return null;
+    }
+
+    /**
+     * 自定义业务异常
+     *
+     * @param e 异常类型 {@link BusinessException}
+     * @return {@link ExceptionResponse}<{@link ?}>
+     */
+    @ExceptionHandler(value = BusinessException.class)
+    public ResponseEntity<ExceptionResponse> handle(BusinessException e) {
         return build(e.getErrorReturn());
     }
 
@@ -93,8 +108,7 @@ public class HandleGlobalExceptionAspect {
      */
     @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
     public ResponseEntity<ExceptionResponse> handle(HttpMediaTypeNotSupportedException e) {
-        // TODO 待完善
-        return null;
+        return build(ErrorReturn.SYSTEM_FATAL_ERROR);
     }
 
     /**
@@ -135,8 +149,7 @@ public class HandleGlobalExceptionAspect {
      */
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     public ResponseEntity<ExceptionResponse> handle(MissingServletRequestParameterException e) {
-        // TODO 待完善
-        return null;
+        return build(ErrorReturn.MISSING_SERVLET_REQUEST_PARAMETER_ERROR);
     }
 
     /**
@@ -147,11 +160,9 @@ public class HandleGlobalExceptionAspect {
      * @param e {@link MissingRequestHeaderException}
      * @return {@link ExceptionResponse}
      */
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(value = MissingRequestHeaderException.class)
     public ResponseEntity<ExceptionResponse> handle(MissingRequestHeaderException e) {
-        // TODO 待完善
-        return null;
+        return build(ErrorReturn.MISSING_REQUEST_HEADER_ERROR);
     }
 
     /**
@@ -164,8 +175,7 @@ public class HandleGlobalExceptionAspect {
      */
     @ExceptionHandler(value = MissingServletRequestPartException.class)
     public ResponseEntity<ExceptionResponse> handle(MissingServletRequestPartException e) {
-        // TODO 待完善
-        return null;
+        return build(ErrorReturn.MISSING_SERVLET_REQUEST_PART_ERROR);
     }
 
     /**
@@ -178,8 +188,7 @@ public class HandleGlobalExceptionAspect {
      */
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ExceptionResponse> handle(MethodArgumentTypeMismatchException e) {
-        // TODO 待完善
-        return null;
+        return build(ErrorReturn.METHOD_ARGUMENT_TYPE_MISMATCH_ERROR);
     }
 
     /**
@@ -192,8 +201,7 @@ public class HandleGlobalExceptionAspect {
      */
     @ExceptionHandler(value = NoHandlerFoundException.class)
     public ResponseEntity<ExceptionResponse> handle(NoHandlerFoundException e) {
-        // TODO 待完善
-        return null;
+        return build(ErrorReturn.NO_HANDLER_FOUND_ERROR);
     }
 
     /**
@@ -207,17 +215,30 @@ public class HandleGlobalExceptionAspect {
     @ResponseStatus(value = HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ExceptionResponse> handle(HttpRequestMethodNotSupportedException e) {
-        // TODO 待完善
-        return null;
+        return build(ErrorReturn.HTTP_REQUEST_METHOD_NOT_SUPPORTED_ERROR);
     }
 
-    private ResponseEntity<ExceptionResponse> build(ErrorReturn errorReturn) {
-        String errorCode = errorReturn.getErrorCode();
-        String message = errorReturn.getMessage();
-        ErrorType errorType = errorReturn.getErrorType();
+    /**
+     * 构建响应
+     *
+     * @param eReturn 错误返回对象
+     * @return {@link ResponseEntity}<{@link ExceptionResponse}>
+     */
+    private ResponseEntity<ExceptionResponse> build(ErrorReturn eReturn) {
+        ExceptionResponse body = buildExceptionResponse(eReturn);
+        return ResponseEntity.status(eReturn.getErrorType().getStatusCode())
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(body);
+    }
+
+    private ExceptionResponse buildExceptionResponse(ErrorReturn eReturn) {
+        ErrorType errorType = eReturn.getErrorType();
         String errorTypeName = errorType.getName();
         int statusCode = errorType.getStatusCode();
-        ExceptionResponse body = ExceptionResponse.builder().errorCode(errorCode).errorType(errorTypeName).data(message).build();
-        return ResponseEntity.status(statusCode).contentType(MediaType.APPLICATION_JSON).body(body);
+        return ExceptionResponse.builder()
+                .statusCode(statusCode)
+                .errorCode(eReturn.getErrorCode())
+                .errorType(errorTypeName)
+                .data(eReturn.getMessage()).build();
     }
 }

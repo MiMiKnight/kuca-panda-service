@@ -1,7 +1,6 @@
 package com.github.mimiknight.panda.common.enumeration;
 
-import com.github.mimiknight.panda.common.tip.ErrorFieldTip;
-import com.github.mimiknight.panda.common.tip.ErrorTip;
+import com.github.mimiknight.panda.common.error.et.ErrorType;
 import lombok.Getter;
 
 /**
@@ -19,9 +18,6 @@ import lombok.Getter;
  * <p>
  * BBBB：异常编码
  * <p>
- * 错误提示类 {@link  ErrorTip}
- * <p>
- * 字段错误提示类 {@link  ErrorFieldTip}
  *
  * @author victor2015yhm@gmail.com
  * @since 2023-03-10 18:46:29
@@ -40,9 +36,6 @@ public enum ErrorReturn {
     //*******************************请求方法不允许异常***********************************//
     HTTP_REQUEST_METHOD_NOT_SUPPORTED_ERROR(ErrorCode.METHOD_NOT_ALLOWED_001, ErrorType.METHOD_NOT_ALLOWED, "Http request method not supported exception"),
 
-    //********************************手动参数校验异常***********************************//
-
-
     //***********************************客户端异常*************************************//
     HTTP_MEDIA_TYPE_NOT_SUPPORTED_ERROR(ErrorCode.CLIENT_001, ErrorType.CLIENT_EXCEPTION, "Http media type not supported exception"),
     HTTP_MESSAGE_NOT_READABLE_ERROR(ErrorCode.CLIENT_002, ErrorType.CLIENT_EXCEPTION, "Http message not readable exception"),
@@ -57,10 +50,7 @@ public enum ErrorReturn {
     METHOD_ARGUMENT_TYPE_MISMATCH_ERROR(ErrorCode.MANUAL_VALID_004, ErrorType.PARAM_VALID_FAILED, "Method argument type mismatch exception"),
 
     //************************************业务异常*************************************//
-
-    /**
-     * 获取锁失败
-     */
+    // 获取锁失败
     GET_LOCK_FAILED(ErrorCode.BUSINESS_001, ErrorType.BUSINESS_EXCEPTION, "Failed to get the lock.");
 
     //**********************************调用接口异常************************************//

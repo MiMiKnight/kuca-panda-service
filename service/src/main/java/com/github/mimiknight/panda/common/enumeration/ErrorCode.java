@@ -1,5 +1,7 @@
 package com.github.mimiknight.panda.common.enumeration;
 
+import com.github.mimiknight.kuca.simple.error.standard.IErrorCode;
+
 /**
  * 错误码
  * <p>
@@ -18,7 +20,7 @@ package com.github.mimiknight.panda.common.enumeration;
  * @author victor2015yhm@gmail.com
  * @since 2023-05-02 15:42:51
  */
-public interface ErrorCode {
+public interface ErrorCode extends IErrorCode {
     String SUCCESS = "00-00-000";
 
     //************************************系统异常*************************************//

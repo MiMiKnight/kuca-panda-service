@@ -45,6 +45,8 @@
         <kuca-ecology.version>0.0.1-SNAPSHOT-jdk8</kuca-ecology.version>
         <!--kuca-utils-->
         <kuca-utils.version>0.0.1-SNAPSHOT-jdk8</kuca-utils.version>
+        <!--kuca-simple-->
+        <kuca-simple.version>0.0.1-SNAPSHOT-jdk8</kuca-simple.version>
     </properties>
 
     <dependencyManagement>
@@ -58,6 +60,11 @@
                 <groupId>com.github.mimiknight.kuca</groupId>
                 <artifactId>kuca-utils-spring-boot-starter</artifactId>
                 <version>${kuca-utils.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.mimiknight.kuca</groupId>
+                <artifactId>kuca-simple-spring-boot-starter</artifactId>
+                <version>${kuca-simple.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

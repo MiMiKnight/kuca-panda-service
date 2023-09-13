@@ -1,5 +1,6 @@
-package com.github.mimiknight.panda.common.enumeration;
+package com.github.mimiknight.panda.common.error.et;
 
+import com.github.mimiknight.kuca.simple.error.standard.IErrorType;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -10,7 +11,7 @@ import org.springframework.http.HttpStatus;
  * @since 2023-03-10 07:47:36
  */
 @Getter
-public enum ErrorType {
+public enum ErrorType implements IErrorType {
 
     /**
      * 参数校验异常

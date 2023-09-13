@@ -1,7 +1,7 @@
 package com.github.mimiknight.panda.common.aspect;
 
 import com.github.mimiknight.panda.common.enumeration.ErrorReturn;
-import com.github.mimiknight.panda.common.enumeration.ErrorType;
+import com.github.mimiknight.panda.common.error.et.ErrorType;
 import com.github.mimiknight.panda.common.exception.BusinessException;
 import com.github.mimiknight.panda.common.exception.ParamValidException;
 import com.github.mimiknight.panda.model.response.ExceptionResponse;

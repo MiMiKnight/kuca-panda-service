@@ -2,40 +2,38 @@ package com.github.mimiknight.panda.common.error.er;
 
 import com.github.mimiknight.kuca.simple.error.standard.ErrorTipErrorReturn;
 import com.github.mimiknight.kuca.simple.error.standard.IErrorType;
+import com.github.mimiknight.kuca.simple.error.tip.ErrorFieldTip;
 import com.github.mimiknight.kuca.simple.error.tip.ErrorTip;
+import com.github.mimiknight.panda.common.error.ec.ParamValidEC;
 import com.github.mimiknight.panda.common.error.et.ErrorType;
 
+/**
+ * 参数校验错误返回对象
+ * <p>
+ * 项目内手动校验参数返回对象
+ *
+ * @author MiMiKnight victor2015yhm@gmail.com
+ * @since 2023-09-14 23:47:48
+ */
 public enum ParamValidER implements ErrorTipErrorReturn {
-    ;
+    AGE_VALID_FAILED(ParamValidEC.CODE_001, "age", "age valid failed.");
 
-    /**
-     * 错误码
-     */
+    //********************************************************************************************************//
+
     private final String errorCode;
-
-    /**
-     * 错误类型
-     */
     private final ErrorType errorType;
-
-
-    /**
-     * 错误提示消息
-     */
     private final ErrorTip message;
 
     /**
-     * 错误返回
-     *
-     * @param errorCode 错误代码
-     * @param message   错误提示消息
+     * @param errorCode 错误码
+     * @param field     字段名称
+     * @param tip       提示信息
      */
-    ParamValidER(String errorCode, ErrorTip message) {
+    ParamValidER(String errorCode, String field, String tip) {
         this.errorCode = errorCode;
         this.errorType = ErrorType.PARAM_VALID_FAILED;
-        this.message = message;
+        this.message = ErrorFieldTip.build(field, tip);
     }
-
 
     @Override
     public String getErrorCode() {

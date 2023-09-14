@@ -1,9 +1,9 @@
 package com.github.mimiknight.panda.common.utils.impl;
 
+import com.github.mimiknight.kuca.simple.exception.BusinessException;
 import com.github.mimiknight.kuca.utils.service.standard.RedisLockService;
 import com.github.mimiknight.panda.common.constant.Constant;
-import com.github.mimiknight.panda.common.enumeration.ErrorReturn;
-import com.github.mimiknight.panda.common.exception.BusinessException;
+import com.github.mimiknight.panda.common.error.er.BusinessER;
 import com.github.mimiknight.panda.common.utils.standard.LockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class LockServiceImpl implements LockService {
         // 如果获取锁失败则抛出异常
         if (!getLockCode.test(lockName)) {
             log.info("Failed to get the lock,lock = {}", lockName);
-            throw new BusinessException(ErrorReturn.GET_LOCK_FAILED);
+            throw new BusinessException(BusinessER.GET_LOCK_FAILED);
         }
         try {
             return lockedCode.get();
@@ -60,7 +60,7 @@ public class LockServiceImpl implements LockService {
         // 如果获取锁失败则抛出异常
         if (!getLockCode.test(lockName)) {
             log.info("Failed to get the lock,lock = {}", lockName);
-            throw new BusinessException(ErrorReturn.GET_LOCK_FAILED);
+            throw new BusinessException(BusinessER.GET_LOCK_FAILED);
         }
         try {
             lockedCode.run();

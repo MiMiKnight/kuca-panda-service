@@ -1,40 +1,34 @@
 package com.github.mimiknight.panda.common.error.er;
 
+import com.github.mimiknight.kuca.simple.error.standard.ErrorTipErrorReturn;
 import com.github.mimiknight.kuca.simple.error.standard.IErrorType;
-import com.github.mimiknight.kuca.simple.error.standard.StringErrorReturn;
+import com.github.mimiknight.kuca.simple.error.tip.ErrorTip;
 import com.github.mimiknight.panda.common.error.et.ErrorType;
 
-public enum CommonER implements StringErrorReturn {
+/**
+ * 公共错误返回对象
+ *
+ * @author MiMiKnight victor2015yhm@gmail.com
+ * @since 2023-09-14 23:47:48
+ */
+public enum CommonER implements ErrorTipErrorReturn {
 
     ;
 
-    /**
-     * 错误码
-     */
+    //********************************************************************************************************//
     private final String errorCode;
-
-    /**
-     * 错误类型
-     */
     private final ErrorType errorType;
-
-
-    /**
-     * 错误提示消息
-     */
-    private final String message;
+    private final ErrorTip message;
 
     /**
-     * 错误返回
-     *
-     * @param errorCode 错误代码
+     * @param errorCode 错误码
      * @param errorType 错误类型
-     * @param message   错误提示消息
+     * @param tip       错误提示信息
      */
-    CommonER(String errorCode, ErrorType errorType, String message) {
+    CommonER(String errorCode, ErrorType errorType, String tip) {
         this.errorCode = errorCode;
         this.errorType = errorType;
-        this.message = message;
+        this.message = ErrorTip.build(tip);
     }
 
     @Override
@@ -48,7 +42,7 @@ public enum CommonER implements StringErrorReturn {
     }
 
     @Override
-    public String getMessage() {
+    public ErrorTip getMessage() {
         return message;
     }
 }

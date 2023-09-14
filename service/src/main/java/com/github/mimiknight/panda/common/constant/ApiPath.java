@@ -29,4 +29,5 @@ public interface ApiPath {
         String ARTICLE = TOP_PREFIX + "/article";
 
     }
+
 }

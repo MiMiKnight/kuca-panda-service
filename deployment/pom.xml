@@ -38,6 +38,32 @@
 
     <build>
         <plugins>
+            <!--maven-enforcer-plugin-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>display-info</goal>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!--规则检查不通过就构建失败;Default:false-->
+                    <failFast>true</failFast>
+                    <rules>
+                        <requireFilesExist>
+                            <files>
+                                <file>${project.basedir}/assembly.xml</file>
+                            </files>
+                        </requireFilesExist>
+                    </rules>
+                </configuration>
+            </plugin>
             <!--maven-assembly-plugin-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

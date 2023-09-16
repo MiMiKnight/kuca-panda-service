@@ -8,7 +8,7 @@
     <parent>
         <groupId>com.github.mimiknight.kuca</groupId>
         <artifactId>kuca-parent-spring-boot-starter</artifactId>
-        <version>0.0.1-SNAPSHOT-jdk8</version>
+        <version>jdk8-2023.9.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -34,17 +34,25 @@
         <maven.build.timestamp.format>yyyyMMddHHmmssSSS</maven.build.timestamp.format>
         <!--项目编码-->
         <project.encoding>UTF-8</project.encoding>
+        <!--JDK 最低运行版本-->
+        <jdk.min.version>1.8.0-202</jdk.min.version>
+        <!--JDK 最低运行版本-->
+        <jdk.max.version>1.8.0-202</jdk.max.version>
+        <!--JDK供应商版本-->
+        <jdk.vendor>Oracle Corporation</jdk.vendor>
         <!--Maven 最低运行版本-->
-        <maven.version>3.8.0</maven.version>
-        <!--OracleJDK 最低运行版本-->
-        <jdk.version>1.8.0_371</jdk.version>
+        <maven.min.version>3.9.0</maven.min.version>
+        <!--Maven 最高运行版本-->
+        <maven.max.version>3.9.4</maven.max.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.version>8</maven.compiler.version>
         <!--kuca-utils-->
-        <kuca-utils.version>0.0.1-SNAPSHOT-jdk8</kuca-utils.version>
+        <kuca-utils.version>jdk8-2023.9.1</kuca-utils.version>
         <!--kuca-simple-->
-        <kuca-simple.version>0.0.1-SNAPSHOT-jdk8</kuca-simple.version>
+        <kuca-simple.version>jdk8-2023.9.1</kuca-simple.version>
     </properties>
 
     <dependencyManagement>
@@ -75,20 +83,40 @@
                         <id>enforce</id>
                         <phase>validate</phase>
                         <goals>
+                            <goal>display-info</goal>
                             <goal>enforce</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <!--规则检查不通过就构建失败;默认值:false-->
+                    <!--规则检查不通过就构建失败;Default:false-->
                     <failFast>true</failFast>
                     <rules>
+                        <!--Maven最低版本-->
                         <requireMavenVersion>
-                            <version>${maven.version}</version>
+                            <!--[min,max]-->
+                            <version>[${maven.min.version},${maven.max.version}]</version>
                         </requireMavenVersion>
+                        <!--JDK最低版本-->
                         <requireJavaVersion>
-                            <version>${jdk.version}</version>
+                            <!--[min,max]-->
+                            <version>[${jdk.min.version},${jdk.max.version}]</version>
                         </requireJavaVersion>
+                        <!--符合要求的Java供应商-->
+                        <requireJavaVendor>
+                            <includes>
+                                <include>${jdk.vendor}</include>
+                            </includes>
+                        </requireJavaVendor>
+                        <!--为项目构建名属性设置限制规则-->
+                        <requireProperty>
+                            <property>project.build.name</property>
+                            <message>You must set a 'project.build.name' property!</message>
+                            <regex>[\w\.-]{5,32}</regex>
+                            <regexMessage>The 'project.build.name' property must conform to '[\w\.]{5,32}' regular
+                                expression.
+                            </regexMessage>
+                        </requireProperty>
                     </rules>
                 </configuration>
             </plugin>
@@ -97,24 +125,42 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <!-- 源代码使用的JDK版本 -->
+                    <!--源码Java版本-->
                     <source>${maven.compiler.source}</source>
-                    <!-- 需要生成的目标class文件的编译版本 -->
+                    <!--目标文件Java版本-->
                     <target>${maven.compiler.target}</target>
-                    <!--测试源码使用的Java版本-->
+                    <!--测试源码Java版本-->
                     <testSource>${maven.compiler.source}</testSource>
                     <!--测试目标文件Java版本-->
                     <testTarget>${maven.compiler.target}</testTarget>
-                    <!--字符集编码-->
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <!--编译时编译器版本-->
-                    <compilerVersion>${maven.compiler.source}</compilerVersion>
+                    <!--编码-->
+                    <encoding>${project.encoding}</encoding>
                     <!--显示告警-->
                     <showWarnings>true</showWarnings>
+                    <fork>true</fork>
+                    <!--指定Maven编译时的Java版本-->
+                    <compilerVersion>${maven.compiler.version}</compilerVersion>
                     <compilerArgs>
                         <!--启用所有推荐的警告-->
                         <arg>-Xlint:all</arg>
                     </compilerArgs>
+                </configuration>
+            </plugin>
+            <!--maven-source-plugin-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>make-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <attach>true</attach>
                 </configuration>
             </plugin>
             <!--maven-clean-plugin-->

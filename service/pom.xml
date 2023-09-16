@@ -87,8 +87,8 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -154,7 +154,34 @@
                 </includes>
             </resource>
         </resources>
+
         <plugins>
+            <!--maven-enforcer-plugin-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>enforce</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>display-info</goal>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!--规则检查不通过就构建失败;Default:false-->
+                    <failFast>true</failFast>
+                    <rules>
+                        <requireFilesExist>
+                            <files>
+                                <file>${project.basedir}/assembly.xml</file>
+                            </files>
+                        </requireFilesExist>
+                    </rules>
+                </configuration>
+            </plugin>
             <!--maven-jar-plugin-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

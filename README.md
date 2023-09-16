@@ -1,6 +1,8 @@
 # 项目名：kuca-panda-service
 
 ## Environment
+- JDK OracleJDK v1.8.0_202
+- maven 3.9.0-3.9.4
 - IntelliJIDEA ideaIU-2022.3.3.win
 - MySQL v8.0.34
 - Redis v3.0.504

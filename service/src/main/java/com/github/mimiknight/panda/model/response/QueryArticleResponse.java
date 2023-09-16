@@ -2,7 +2,7 @@ package com.github.mimiknight.panda.model.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.mimiknight.kuca.ecology.model.response.EcologyResponse;
-import com.github.mimiknight.panda.model.response.vo.QueryArticleVo;
+import com.github.mimiknight.panda.model.response.respvo.QueryArticleRespVo;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,5 +19,5 @@ import java.util.List;
 public class QueryArticleResponse implements EcologyResponse {
 
     @JsonProperty(value = "articles")
-    private List<QueryArticleVo> queryArticleVos;
+    private List<QueryArticleRespVo> queryArticleRespVos;
 }

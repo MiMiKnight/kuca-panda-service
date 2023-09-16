@@ -5,7 +5,7 @@ import com.github.mimiknight.panda.mapstruct.CommonMapStruct;
 import com.github.mimiknight.panda.model.entity.ArticleEntity;
 import com.github.mimiknight.panda.model.request.QueryArticleRequest;
 import com.github.mimiknight.panda.model.response.QueryArticleResponse;
-import com.github.mimiknight.panda.model.response.vo.QueryArticleVo;
+import com.github.mimiknight.panda.model.response.respvo.QueryArticleRespVo;
 import com.github.mimiknight.panda.service.standard.ArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +36,9 @@ public class QueryArticleHandler implements EcologyRequestHandler<QueryArticleRe
         List<String> articleIds = request.getArticleIds();
         List<ArticleEntity> articleEntityList = articleService.queryArticleById(articleIds);
 
-        List<QueryArticleVo> list = commonMapStruct.convert(articleEntityList);
+        List<QueryArticleRespVo> list = commonMapStruct.convert(articleEntityList);
 
-        response.setQueryArticleVos(list);
+        response.setQueryArticleRespVos(list);
 
     }
 }

@@ -1,7 +1,7 @@
 package com.github.mimiknight.panda.mapstruct;
 
 import com.github.mimiknight.panda.model.entity.ArticleEntity;
-import com.github.mimiknight.panda.model.response.vo.QueryArticleVo;
+import com.github.mimiknight.panda.model.response.respvo.QueryArticleRespVo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -20,7 +20,7 @@ public interface CommonMapStruct {
      * ArticleEntity转Article
      *
      * @param entities 文章实体类集合
-     * @return {@link List}<{@link QueryArticleVo}>
+     * @return {@link List}<{@link QueryArticleRespVo}>
      */
 
     @Mapping(source = "id", target = "id")
@@ -28,6 +28,6 @@ public interface CommonMapStruct {
     @Mapping(source = "article", target = "content")
     @Mapping(source = "createdTime", target = "createdTime")
     @Mapping(source = "updatedTime", target = "updatedTime")
-    List<QueryArticleVo> convert(List<ArticleEntity> entities);
+    List<QueryArticleRespVo> convert(List<ArticleEntity> entities);
 
 }

@@ -12,6 +12,8 @@ public class SendSiteMessageListener implements ApplicationListener<SiteMessageE
     public void onApplicationEvent(SiteMessageEvent event) {
         Object source = event.getSource();
         long timestamp = event.getTimestamp();
-        log.info("send site message...");
+        log.info("send site message...111");
+        int a = 1 / 0;
+        log.info("send site message...222");
     }
 }

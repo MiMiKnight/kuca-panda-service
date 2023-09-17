@@ -18,7 +18,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 public class ApplicationEventAsyncConfig {
 
     @Autowired
-    @Qualifier(value = "MyThreadPoolExecutor")
+    @Qualifier(value = "AsyncThreadPoolExecutor")
     private ThreadPoolTaskExecutor taskExecutor;
 
     @Bean

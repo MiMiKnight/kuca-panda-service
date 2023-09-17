@@ -6,7 +6,7 @@ import com.github.mimiknight.panda.model.request.SaveArticleRequest;
 import com.github.mimiknight.panda.model.response.SaveArticleResponse;
 import com.github.mimiknight.panda.service.standard.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 /**
@@ -22,7 +22,7 @@ public class SaveArticleHandler implements EcologyRequestHandler<SaveArticleRequ
     private ArticleService articleService;
 
     @Autowired
-    private ApplicationContext appContext;
+    private ApplicationEventPublisher eventPublisher;
 
     @Override
     public void handle(SaveArticleRequest request, SaveArticleResponse response) throws Exception {
@@ -31,6 +31,6 @@ public class SaveArticleHandler implements EcologyRequestHandler<SaveArticleRequ
         articleService.save(title, article);
 
         SiteMessageEvent messageEvent = new SiteMessageEvent(this);
-        appContext.publishEvent(messageEvent);
+        eventPublisher.publishEvent(messageEvent);
     }
 }

@@ -22,12 +22,14 @@ public interface CommonMapStruct {
      * @param entities 文章实体类集合
      * @return {@link List}<{@link QueryArticleRespVo}>
      */
+    List<QueryArticleRespVo> convert(List<ArticleEntity> entities);
+
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "title", target = "title")
     @Mapping(source = "article", target = "content")
     @Mapping(source = "createdTime", target = "createdTime")
     @Mapping(source = "updatedTime", target = "updatedTime")
-    List<QueryArticleRespVo> convert(List<ArticleEntity> entities);
+    QueryArticleRespVo convert(ArticleEntity entity);
 
 }

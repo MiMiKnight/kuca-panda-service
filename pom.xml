@@ -7,7 +7,7 @@
     <!--父工程-->
     <parent>
         <groupId>com.github.mimiknight.kuca</groupId>
-        <artifactId>kuca-parent-spring-boot-starter</artifactId>
+        <artifactId>kuca-parent</artifactId>
         <version>jdk8-2023.9.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
@@ -34,6 +34,8 @@
         <maven.build.timestamp.format>yyyyMMddHHmmssSSS</maven.build.timestamp.format>
         <!--项目编码-->
         <project.encoding>UTF-8</project.encoding>
+        <!--jdk.vendor-->
+        <jdk.vendor>Oracle Corporation</jdk.vendor>
         <!--JDK 最低运行版本-->
         <jdk.min.version>1.8.0-202</jdk.min.version>
         <!--JDK 最低运行版本-->
@@ -59,12 +61,12 @@
         <dependencies>
             <dependency>
                 <groupId>com.github.mimiknight.kuca</groupId>
-                <artifactId>kuca-utils-spring-boot-starter</artifactId>
+                <artifactId>kuca-utils</artifactId>
                 <version>${kuca-utils.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.mimiknight.kuca</groupId>
-                <artifactId>kuca-simple-spring-boot-starter</artifactId>
+                <artifactId>kuca-simple</artifactId>
                 <version>${kuca-simple.version}</version>
             </dependency>
         </dependencies>

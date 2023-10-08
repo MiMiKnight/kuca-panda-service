@@ -29,11 +29,11 @@
     <dependencies>
         <dependency>
             <groupId>com.github.mimiknight.kuca</groupId>
-            <artifactId>kuca-utils-spring-boot-starter</artifactId>
+            <artifactId>kuca-utils</artifactId>
         </dependency>
         <dependency>
             <groupId>com.github.mimiknight.kuca</groupId>
-            <artifactId>kuca-simple-spring-boot-starter</artifactId>
+            <artifactId>kuca-simple</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -8,13 +8,11 @@ import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Properties;
 
 @Slf4j
-@Component
 @Intercepts({
         @Signature(type = Executor.class,
                 method = "update",

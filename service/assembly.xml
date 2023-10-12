@@ -28,9 +28,10 @@
             <outputDirectory>/resources</outputDirectory>
             <includes>
                 <include>config/*.properties</include>
-                <include>mapper/*Mapper.xml</include>
-                <include>SSL/SSL.keystore</include>
+                <include>certificate/SSL.keystore</include>
                 <include>logback-spring.xml</include>
+                <include>mybatis/mapper/**/*Mapper.xml</include>
+                <include>mybatis/mybatis-config.xml</include>
             </includes>
             <fileMode>0644</fileMode>
             <directoryMode>0744</directoryMode>

@@ -141,10 +141,11 @@
             <resource>
                 <directory>${project.basedir}/src/main/resources</directory>
                 <includes>
-                    <include>mapper/**/*Mapper.xml</include>
                     <include>config/*.properties</include>
-                    <include>SSL/SSL.keystore</include>
+                    <include>certificate/SSL.keystore</include>
                     <include>logback-spring.xml</include>
+                    <include>mybatis/mapper/**/*Mapper.xml</include>
+                    <include>mybatis/mybatis-config.xml</include>
                 </includes>
             </resource>
             <!--把src/test/resource下指定文件拷贝到classes类路径下-->

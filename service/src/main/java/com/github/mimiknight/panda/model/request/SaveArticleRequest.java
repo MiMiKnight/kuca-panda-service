@@ -2,6 +2,8 @@ package com.github.mimiknight.panda.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.mimiknight.kuca.ecology.model.request.EcologyRequest;
+import com.github.mimiknight.panda.common.annotation.ArticleAuditStatusFormat;
+import com.github.mimiknight.panda.common.enumeration.ArticleAuditStatusEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,4 +28,8 @@ public class SaveArticleRequest implements EcologyRequest {
      */
     @JsonProperty(value = "article")
     private String article;
+
+    @ArticleAuditStatusFormat
+    @JsonProperty(value = "audit_status")
+    private ArticleAuditStatusEnum auditStatus;
 }

@@ -55,6 +55,8 @@
         <kuca-utils.version>jdk8-2023.9.1</kuca-utils.version>
         <!--kuca-simple-->
         <kuca-simple.version>jdk8-2023.9.1</kuca-simple.version>
+        <!--kuca-validation-->
+        <kuca-validation.version>jdk8-2023.9.1</kuca-validation.version>
     </properties>
 
     <dependencyManagement>
@@ -68,6 +70,11 @@
                 <groupId>com.github.mimiknight.kuca</groupId>
                 <artifactId>kuca-simple</artifactId>
                 <version>${kuca-simple.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.mimiknight.kuca</groupId>
+                <artifactId>kuca-validation</artifactId>
+                <version>${kuca-validation.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

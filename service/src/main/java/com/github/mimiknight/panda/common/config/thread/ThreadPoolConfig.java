@@ -1,28 +1,24 @@
-package com.github.mimiknight.panda.common.config;
+package com.github.mimiknight.panda.common.config.thread;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 @Configuration
 public class ThreadPoolConfig {
 
-    /**
-     * 配置异步任务线程池
-     *
-     * @return {@link ThreadPoolTaskExecutor}
-     */
-    @Bean("AsyncThreadPoolExecutor")
-    public ThreadPoolTaskExecutor asyncThreadPoolExecutor() {
+    @Bean("AsyncEventThreadPool")
+    public ThreadPoolTaskExecutor asyncEventThreadPool() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         // 设置线程池参数信息
         executor.setCorePoolSize(8);
         executor.setMaxPoolSize(20);
         executor.setQueueCapacity(50);
         executor.setKeepAliveSeconds(60);
-        executor.setThreadNamePrefix("AsyncThreadPool-");
+        executor.setThreadNamePrefix("AsyncEventThreadPool-");
         executor.setWaitForTasksToCompleteOnShutdown(true);
         // 设置线程池中任务的等待时间，如果超过这个时候还没有销毁就强制销毁，以确保应用最后能够被关闭，而不是阻塞住。
         executor.setAwaitTerminationSeconds(60);
@@ -34,5 +30,4 @@ public class ThreadPoolConfig {
         executor.initialize();
         return executor;
     }
-
 }

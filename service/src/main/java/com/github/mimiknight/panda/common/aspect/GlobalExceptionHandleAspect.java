@@ -1,17 +1,20 @@
 package com.github.mimiknight.panda.common.aspect;
 
 import com.github.mimiknight.kuca.simple.aspect.BaseGlobalExceptionHandle;
-import com.github.mimiknight.kuca.simple.error.standard.ErrorFieldTipErrorReturn;
+import com.github.mimiknight.kuca.simple.error.tip.ErrorFieldTip;
 import com.github.mimiknight.kuca.simple.response.ExceptionResponse;
+import com.github.mimiknight.kuca.validation.action.KucaConstraintAnnotationDescriptor;
+import com.github.mimiknight.kuca.validation.action.KucaConstraintHelper;
+import com.github.mimiknight.panda.common.error.et.ErrorType;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.MethodParameter;
+import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -25,8 +28,6 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.List;
 
 /**
  * 全局异常处理切面
@@ -85,35 +86,42 @@ public class GlobalExceptionHandleAspect extends BaseGlobalExceptionHandle {
      * @param e 异常类型 {@link MethodArgumentNotValidException}
      * @return {@link ResponseEntity}<{@link ExceptionResponse}>
      */
+    @SuppressWarnings({"rawtypes"})
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ResponseEntity<ExceptionResponse> handle(MethodArgumentNotValidException e) throws NoSuchFieldException {
-        String message = e.getMessage();
-        MethodParameter parameter = e.getParameter();
-        Throwable cause = e.getCause();
+    public ResponseEntity<ExceptionResponse> handle(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
-        int errorCount = e.getErrorCount();
-        List<ObjectError> allErrors = e.getAllErrors();
-        FieldError fieldError = e.getFieldError();
-        int fieldErrorCount = e.getFieldErrorCount();
-
-
-        // 被校验对象Class
-        Class<?> parameterType = parameter.getParameterType();
-
+        // 目标对象
+        Object target = bindingResult.getTarget();
+        // 字段错误对象
+        FieldError fieldError = bindingResult.getFieldError();
         // 字段名称
         String fieldName = fieldError.getField();
+        // 错误提示消息
+        String errorTipMessage = fieldError.getDefaultMessage();
 
-        // 校验注解名称
-        String code = fieldError.getCode();
+        ConstraintViolationImpl violation = KucaConstraintHelper.getConstraintViolation(fieldError);
+        Annotation constraintAnnotation = KucaConstraintHelper.getConstraintAnnotation(violation);
+        KucaConstraintAnnotationDescriptor<Annotation> annotationDescriptor = KucaConstraintHelper.getKucaConstraintAnnotationDescriptor(constraintAnnotation);
+        // 错误码
+        String errorCode = annotationDescriptor.getErrorCode();
+        // 字段展示名称
+        String fieldDisplayName = KucaConstraintHelper.getFieldDisplayName(target, fieldName);
 
-        // 反射获取校验字段
-        Field field = parameterType.getDeclaredField(fieldName);
+        // 状态码
+        int statusCode = ErrorType.PARAM_VALID_FAILED.getStatusCode();
+        // 错误类型
+        String errorTypeName = ErrorType.PARAM_VALID_FAILED.getName();
+        // 字段错误提示对象
+        ErrorFieldTip errorFieldTip = ErrorFieldTip.build(fieldDisplayName, errorTipMessage);
 
-        Annotation[] declaredAnnotations = field.getDeclaredAnnotations();
+        ExceptionResponse body = ExceptionResponse.builder()
+                .statusCode(statusCode)
+                .errorCode(errorCode)
+                .errorType(errorTypeName)
+                .data(errorFieldTip)
+                .build();
 
-        // 错误提示信息
-        String defaultMessage = fieldError.getDefaultMessage();
-        return null;
+        return ResponseEntity.status(statusCode).contentType(MediaType.APPLICATION_JSON).body(body);
     }
 
     /**

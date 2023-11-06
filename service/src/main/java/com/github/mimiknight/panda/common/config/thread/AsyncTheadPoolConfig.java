@@ -2,9 +2,9 @@ package com.github.mimiknight.panda.common.config.thread;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.lang.reflect.Method;
@@ -12,16 +12,17 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * 异步线程池 异常捕获处理 配置类
+ * 异步线程池配置类
  * <p>
- * TODO 捕获失效 待处理
+ * 仅 针对使用了@Async注解的异步方法生效
  *
  * @author MiMiKnight victor2015yhm@gmail.com
  * @since 2023-09-18 00:42:41
  */
 @Slf4j
+@EnableAsync
 @Configuration
-public class AsyncEventTheadPoolConfig implements AsyncConfigurer {
+public class AsyncTheadPoolConfig implements AsyncConfigurer {
 
     /**
      * 指定线程池执行器
@@ -36,7 +37,7 @@ public class AsyncEventTheadPoolConfig implements AsyncConfigurer {
         executor.setMaxPoolSize(20);
         executor.setQueueCapacity(50);
         executor.setKeepAliveSeconds(60);
-        executor.setThreadNamePrefix("AsyncEventThreadPool-");
+        executor.setThreadNamePrefix("AsyncThreadPool-");
         executor.setWaitForTasksToCompleteOnShutdown(true);
         // 设置线程池中任务的等待时间，如果超过这个时候还没有销毁就强制销毁，以确保应用最后能够被关闭，而不是阻塞住。
         executor.setAwaitTerminationSeconds(60);

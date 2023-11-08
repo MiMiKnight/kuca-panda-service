@@ -2,19 +2,17 @@ package com.github.mimiknight.panda.common.aspect;
 
 import com.github.mimiknight.kuca.simple.aspect.BaseGlobalExceptionHandle;
 import com.github.mimiknight.kuca.simple.error.tip.ErrorFieldTip;
+import com.github.mimiknight.kuca.simple.error.tip.ErrorTip;
 import com.github.mimiknight.kuca.simple.response.ExceptionResponse;
-import com.github.mimiknight.kuca.validation.action.KucaConstraintAnnotationDescriptor;
 import com.github.mimiknight.kuca.validation.action.KucaConstraintHelper;
+import com.github.mimiknight.kuca.validation.model.AnnotationParamValidErrorTip;
 import com.github.mimiknight.panda.common.error.et.ErrorType;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.internal.engine.ConstraintViolationImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,7 +25,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import java.lang.annotation.Annotation;
+import java.util.function.Supplier;
 
 /**
  * 全局异常处理切面
@@ -39,6 +37,33 @@ import java.lang.annotation.Annotation;
 @ControllerAdvice
 public class GlobalExceptionHandleAspect extends BaseGlobalExceptionHandle {
 
+    private ResponseEntity<ExceptionResponse> buildDefaultExceptionResponse() {
+        int statusCode = ErrorType.SYSTEM_EXCEPTION.getStatusCode();
+        String errorType = ErrorType.SYSTEM_EXCEPTION.getName();
+        String errorCode = "1022555";
+        String message = "The service exception.";
+        ErrorTip errorTip = ErrorTip.build(message);
+
+        ExceptionResponse response = ExceptionResponse.builder()
+                .statusCode(statusCode)
+                .errorCode(errorCode)
+                .errorType(errorType)
+                .data(errorTip).build();
+
+        return ResponseEntity.status(statusCode)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(response);
+    }
+
+    private ResponseEntity<ExceptionResponse> handle(Supplier<ResponseEntity<ExceptionResponse>> supplier) {
+        try {
+            return supplier.get();
+        } catch (Exception e) { // 若全局异常处理切面中的代码逻辑引发异常，则作出该默认提示
+            log.error("Handle GlobalExceptionHandleAspect Exception,message = {}", e.getMessage());
+            return buildDefaultExceptionResponse();
+        }
+    }
+
     /**
      * 系统致命异常处理
      * <p>
@@ -49,7 +74,10 @@ public class GlobalExceptionHandleAspect extends BaseGlobalExceptionHandle {
      */
     @ExceptionHandler(value = Throwable.class)
     public ResponseEntity<ExceptionResponse> handle(Throwable e) {
-        return null;
+        Supplier<ResponseEntity<ExceptionResponse>> supplier = () -> {
+            return null;
+        };
+        return handle(supplier);
     }
 
     /**
@@ -62,7 +90,10 @@ public class GlobalExceptionHandleAspect extends BaseGlobalExceptionHandle {
      */
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<ExceptionResponse> handle(Exception e) {
-        return null;
+        Supplier<ResponseEntity<ExceptionResponse>> supplier = () -> {
+            return null;
+        };
+        return handle(supplier);
     }
 
     /**
@@ -75,7 +106,10 @@ public class GlobalExceptionHandleAspect extends BaseGlobalExceptionHandle {
      */
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<ExceptionResponse> handle(RuntimeException e) {
-        return null;
+        Supplier<ResponseEntity<ExceptionResponse>> supplier = () -> {
+            return null;
+        };
+        return handle(supplier);
     }
 
     /**
@@ -86,42 +120,37 @@ public class GlobalExceptionHandleAspect extends BaseGlobalExceptionHandle {
      * @param e 异常类型 {@link MethodArgumentNotValidException}
      * @return {@link ResponseEntity}<{@link ExceptionResponse}>
      */
-    @SuppressWarnings({"rawtypes"})
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionResponse> handle(MethodArgumentNotValidException e) {
-        BindingResult bindingResult = e.getBindingResult();
-        // 目标对象
-        Object target = bindingResult.getTarget();
-        // 字段错误对象
-        FieldError fieldError = bindingResult.getFieldError();
-        // 字段名称
-        String fieldName = fieldError.getField();
-        // 错误提示消息
-        String errorTipMessage = fieldError.getDefaultMessage();
 
-        ConstraintViolationImpl violation = KucaConstraintHelper.getConstraintViolation(fieldError);
-        Annotation constraintAnnotation = KucaConstraintHelper.getConstraintAnnotation(violation);
-        KucaConstraintAnnotationDescriptor<Annotation> annotationDescriptor = KucaConstraintHelper.getKucaConstraintAnnotationDescriptor(constraintAnnotation);
-        // 错误码
-        String errorCode = annotationDescriptor.getErrorCode();
-        // 字段展示名称
-        String fieldDisplayName = KucaConstraintHelper.getFieldDisplayName(target, fieldName);
+        Supplier<ResponseEntity<ExceptionResponse>> supplier = () -> {
+            // 注解校验错误提示信息对象
+            AnnotationParamValidErrorTip tip = KucaConstraintHelper.createAnnotationParamValidErrorTip(e);
+            // 状态码
+            int statusCode = ErrorType.PARAM_VALID_FAILED.getStatusCode();
+            // 错误类型
+            String errorTypeName = ErrorType.PARAM_VALID_FAILED.getName();
+            // 错误码
+            String errorCode = tip.getErrorCode();
+            // 被校验字段名称
+            String fieldName = tip.getFieldName();
+            // 校验提示信息
+            String message = tip.getMessage();
+            // 字段错误提示对象
+            ErrorFieldTip errorFieldTip = ErrorFieldTip.build(fieldName, message);
 
-        // 状态码
-        int statusCode = ErrorType.PARAM_VALID_FAILED.getStatusCode();
-        // 错误类型
-        String errorTypeName = ErrorType.PARAM_VALID_FAILED.getName();
-        // 字段错误提示对象
-        ErrorFieldTip errorFieldTip = ErrorFieldTip.build(fieldDisplayName, errorTipMessage);
+            ExceptionResponse body = ExceptionResponse.builder()
+                    .statusCode(statusCode)
+                    .errorCode(errorCode)
+                    .errorType(errorTypeName)
+                    .data(errorFieldTip)
+                    .build();
 
-        ExceptionResponse body = ExceptionResponse.builder()
-                .statusCode(statusCode)
-                .errorCode(errorCode)
-                .errorType(errorTypeName)
-                .data(errorFieldTip)
-                .build();
-
-        return ResponseEntity.status(statusCode).contentType(MediaType.APPLICATION_JSON).body(body);
+            return ResponseEntity.status(statusCode)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(body);
+        };
+        return handle(supplier);
     }
 
     /**
